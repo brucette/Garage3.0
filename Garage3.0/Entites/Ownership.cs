@@ -1,11 +1,15 @@
-﻿namespace Garage3._0.Entites
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Garage3._0.Entites
 {
     public class Ownership
     {
         // Foregin key
-        public string PersonNumber { get; set; }
+        [ForeignKey("PersonNumber")]
+        public string PersonNumberEntity { get; set; }
         // Foregin key
-        public string RegisterNumber { get; set; }
+        [ForeignKey("RegisterNumber")]
+        public string RegisterNumberEntity { get; set; }
 
     }
 }
