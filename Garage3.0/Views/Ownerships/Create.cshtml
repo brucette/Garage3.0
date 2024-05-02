@@ -13,8 +13,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MemberId" class="control-label"></label>
-                <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.MemberId"></select>
+                <label asp-for="PersonNumber" class="control-label"></label>
+                <select asp-for="PersonNumber" class="form-control" asp-items="ViewBag.MemberId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="RegisterNumber" class="control-label"></label>
@@ -22,14 +22,14 @@
                 <span asp-validation-for="RegisterNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PersonNumberEntity" class="control-label"></label>
-                <input asp-for="PersonNumberEntity" class="form-control" />
-                <span asp-validation-for="PersonNumberEntity" class="text-danger"></span>
+                <label asp-for="PersonNumber" class="control-label"></label>
+                <input asp-for="PersonNumber" class="form-control" />
+                <span asp-validation-for="PersonNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RegisterNumberEntity" class="control-label"></label>
-                <input asp-for="RegisterNumberEntity" class="form-control" />
-                <span asp-validation-for="RegisterNumberEntity" class="text-danger"></span>
+                <label asp-for="RegisterNumber" class="control-label"></label>
+                <input asp-for="RegisterNumber" class="form-control" />
+                <span asp-validation-for="RegisterNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

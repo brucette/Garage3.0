@@ -5,7 +5,7 @@ namespace Garage3._0.Entites
     public class Member
     {
         [Key]
-        public string MemberId { get; set; }
+        public string PersonNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

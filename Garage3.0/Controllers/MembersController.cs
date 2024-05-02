@@ -34,7 +34,7 @@ namespace Garage3._0.Controllers
             }
 
             var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.MemberId == id);
+                .FirstOrDefaultAsync(m => m.PersonNumber == id);
             if (member == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MemberId,FirstName,LastName,Membership")] Member member)
         {
-            if (id != member.MemberId)
+            if (id != member.PersonNumber)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Garage3._0.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.MemberId))
+                    if (!MemberExists(member.PersonNumber))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace Garage3._0.Controllers
             }
 
             var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.MemberId == id);
+                .FirstOrDefaultAsync(m => m.PersonNumber == id);
             if (member == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace Garage3._0.Controllers
 
         private bool MemberExists(string id)
         {
-            return _context.Member.Any(e => e.MemberId == id);
+            return _context.Member.Any(e => e.PersonNumber == id);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Garage3._0.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.MemberId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.PersonNumber);
             return View(ownership);
         }
 
@@ -82,7 +82,7 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.MemberId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.PersonNumber);
             return View(ownership);
         }
 
@@ -118,7 +118,7 @@ namespace Garage3._0.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.MemberId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "MemberId", "MemberId", ownership.PersonNumber);
             return View(ownership);
         }
 

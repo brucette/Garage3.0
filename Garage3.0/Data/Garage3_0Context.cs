@@ -16,5 +16,7 @@ namespace Garage3._0.Data
 
         public DbSet<Garage3._0.Entites.Ownership> Ownership { get; set; } = default!;
         public DbSet<Garage3._0.Entites.Member> Member { get; set; } = default!;
+
+        
     }
 }
