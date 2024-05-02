@@ -7,4 +7,8 @@
     <RootNamespace>Garage3._0</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Entites\" />
+  </ItemGroup>
+
 </Project>
