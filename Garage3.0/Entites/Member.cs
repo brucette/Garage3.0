@@ -13,8 +13,6 @@ namespace Garage3._0.Entites
 
         public string FullName => $"{FirstName} {LastName}";
 
-        // something here e.g. 
-        // public ICollection<Ownership> Ownerships { get; set; }
         public ICollection<Ownership> Ownerships { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Garage3._0.Controllers
 
             var ownership = await _context.Ownership
                 .Include(o => o.Member)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.VehicleId == id);
             if (ownership == null)
             {
                 return NotFound();
@@ -93,7 +93,7 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EnrollmentId,MemberId,Id,RegisterNumber,PersonNumberEntity,RegisterNumberEntity")] Ownership ownership)
         {
-            if (id != ownership.Id)
+            if (id != ownership.VehicleId)
             {
                 return NotFound();
             }
@@ -107,7 +107,7 @@ namespace Garage3._0.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OwnershipExists(ownership.Id))
+                    if (!OwnershipExists(ownership.VehicleId))
                     {
                         return NotFound();
                     }
@@ -132,7 +132,7 @@ namespace Garage3._0.Controllers
 
             var ownership = await _context.Ownership
                 .Include(o => o.Member)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.VehicleId == id);
             if (ownership == null)
             {
                 return NotFound();
@@ -158,7 +158,7 @@ namespace Garage3._0.Controllers
 
         private bool OwnershipExists(int id)
         {
-            return _context.Ownership.Any(e => e.Id == id);
+            return _context.Ownership.Any(e => e.VehicleId == id);
         }
     }
 }
