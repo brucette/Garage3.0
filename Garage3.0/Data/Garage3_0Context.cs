@@ -21,7 +21,6 @@ namespace Garage3._0.Data
             modelBuilder.Entity<Ownership>().HasKey(e => new { e.PersonNumber, e.VehicleId });
         }
 
-        public DbSet<Garage3._0.Entites.Ownership> Ownership { get; set; } = default!;
         public DbSet<Garage3._0.Entites.Member> Member { get; set; } = default!;
 
         // något här vetefan vad bara
