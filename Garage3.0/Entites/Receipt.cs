@@ -15,5 +15,7 @@ namespace Garage3._0.Entites
         // Foregin key
         //[ForeignKey("RegisterNumber")]
         //public string RegisterNumberEntity { get; set; }
+
+        public ICollection<Ownership> Ownerships { get; set; }
     }
 }
