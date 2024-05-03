@@ -22,7 +22,7 @@ namespace Garage3._0.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Member.ToListAsync());
+            return View(await _context.Members.ToListAsync());
         }
 
         // GET: Members/Details/5
@@ -33,8 +33,8 @@ namespace Garage3._0.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.PersonNumber == id);
+            var member = await _context.Members
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (member == null)
             {
                 return NotFound();
@@ -73,7 +73,7 @@ namespace Garage3._0.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id);
+            var member = await _context.Members.FindAsync(id);
             if (member == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MemberId,FirstName,LastName,Membership")] Member member)
         {
-            if (id != member.PersonNumber)
+            if (id != member.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Garage3._0.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.PersonNumber))
+                    if (!MemberExists(member.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +124,8 @@ namespace Garage3._0.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.PersonNumber == id);
+            var member = await _context.Members
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (member == null)
             {
                 return NotFound();
@@ -139,10 +139,10 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var member = await _context.Member.FindAsync(id);
+            var member = await _context.Members.FindAsync(id);
             if (member != null)
             {
-                _context.Member.Remove(member);
+                _context.Members.Remove(member);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace Garage3._0.Controllers
 
         private bool MemberExists(string id)
         {
-            return _context.Member.Any(e => e.PersonNumber == id);
+            return _context.Members.Any(e => e.Id == id);
         }
     }
 }

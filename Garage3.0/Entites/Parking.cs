@@ -5,7 +5,10 @@
         public int Id { get; set; }
         public int ParkingLotNumber { get; set; }
         public DateTime ArrivalTime { get; set; }
-        //forEGIN Key
-        //public string RegisterNumberEntity { get; set; }    
+
+        public int VehicleId { get; set; } // Foreign key
+
+        // Navigation property 
+        public Ownership Ownership { get; set; }
     }
 }

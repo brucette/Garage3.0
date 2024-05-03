@@ -6,12 +6,14 @@ namespace Garage3._0.Entites
     {
         public int Id { get; set; }
         public DateTime ArrivalTime { get; set; }
-
-        public DateTime? CheckoutTime { get; set; }
-
-        public TimeSpan? TotalParkingTime { get; set; }
+        public DateTime CheckOut { get; set; }
+        public TimeSpan TotParkingTime { get; set; }
         public double Price { get; set; }
 
-        public ICollection<Ownership> Ownerships { get; set; }
+        //foregin key 
+        public string VehicleId { get; set; }
+
+        //Navigation property
+        public Ownership Ownership { get; set; }
     }
 }

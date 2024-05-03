@@ -5,9 +5,8 @@
         public int Id { get; set; }
         public string Type { get; set; }
         public int NumWheels { get; set; }
-        public int VehicleId { get; set; }
-
-        public Vehicle Vehicles { get; set; }
+        public string VehicleId { get; set; }//foreign key
+        public Vehicle Vehicle { get; set; }
 
     }
 }
