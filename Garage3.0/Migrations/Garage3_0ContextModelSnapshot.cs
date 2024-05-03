@@ -150,7 +150,7 @@ namespace Garage3._0.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicle");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.VehicleType", b =>
