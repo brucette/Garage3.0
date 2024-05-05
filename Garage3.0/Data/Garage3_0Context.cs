@@ -48,6 +48,7 @@ namespace Garage3._0.Data
                 .HasForeignKey(o => o.VehicleId);
             */
         }
+        public DbSet<Garage3._0.Entites.Vehicle> Vehicle { get; set; } = default!;
 
         // något här vetefan vad bara
     }
