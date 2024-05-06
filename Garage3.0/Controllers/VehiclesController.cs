@@ -23,7 +23,12 @@ namespace Garage3._0.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vehicle.ToListAsync());
+            var vehicles = await _context.Vehicle
+                .Include(v => v.Ownerships)
+                    .ThenInclude(o => o.Member)
+                .ToListAsync();
+
+            return View(vehicles);
         }
 
         // GET: Vehicles/Details/5
@@ -97,6 +102,20 @@ namespace Garage3._0.Controllers
 
             return View(viewModel);
         }
+
+        //// GET: Summary
+        //public async Task<IActionResult> Summary()
+        //{
+        //    var vehicles = _context.Vehicle.Select(vehicle => new Parking
+        //    {
+        //        VehicleId = Parking.VehicleId,
+        //        RegistrationNumber = vehicle.RegistrationNumber,
+        //        ArrivalTime = vehicle.ArrivalTime,
+        //        TotParkingTime = DateTime.Now - vehicle.ArrivalTime
+        //    });
+
+        //    return View(await vehicles.ToListAsync());
+        //}
 
 
         // GET: Vehicles/Edit/5
