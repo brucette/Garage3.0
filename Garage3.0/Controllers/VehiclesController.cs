@@ -60,7 +60,7 @@ namespace Garage3._0.Controllers
             if (ModelState.IsValid)
             {
                 var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == viewModel.OwnerPersonalNumber);
-                if(member != null)
+                if (member != null)
                 {
                     var vehicle = new Vehicle
                     {
@@ -81,14 +81,23 @@ namespace Garage3._0.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-
+                else
+                {
+                    ModelState.AddModelError(nameof(viewModel.OwnerPersonalNumber), "Owner not found.");
+                }
             }
-            else 
+            // Lägg till valideringsmeddelanden om modellen inte är giltig eller om medlemmen inte finns.
+            else
             {
-                ModelState.AddModelError(nameof(viewModel.OwnerPersonalNumber), "Owner not found.");
+                if (string.IsNullOrEmpty(viewModel.RegisterNumber) || viewModel.RegisterNumber.Length != 6)
+                {
+                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "Register Number must be 6 characters long.");
+                }
             }
+
             return View(viewModel);
         }
+
 
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(string id)
