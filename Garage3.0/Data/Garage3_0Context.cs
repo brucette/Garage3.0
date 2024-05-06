@@ -19,6 +19,7 @@ namespace Garage3._0.Data
         public DbSet<Ownership> Ownerships { get; set; } = default!;
         public DbSet<Parking> Parkings { get; set; } = default!;
         public DbSet<Receipt> Receipts { get; set; } = default!;
+        
         //public DbSet<VehicleType> VehicleTypes { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,6 +50,7 @@ namespace Garage3._0.Data
             */
         }
         public DbSet<Garage3._0.Entites.Vehicle> Vehicle { get; set; } = default!;
+        public IEnumerable<object> VehicleType { get; internal set; }
 
         // något här vetefan vad bara
     }

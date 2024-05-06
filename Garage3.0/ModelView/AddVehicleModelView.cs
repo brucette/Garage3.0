@@ -15,5 +15,9 @@ namespace Garage3._0.ModelView
         public string OwnerPersonalNumber { get; set; } // Or Member ID
 
         //Add VehicleType Info here if you want?
+        [Display(Name = "Type of Vehicle")]
+
+        public int VehicleTypeId { get; set; }
+
     }
 }
