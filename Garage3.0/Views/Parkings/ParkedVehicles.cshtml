@@ -1,0 +1,93 @@
+﻿@model List<Garage3._0.ModelView.GarageViewModel>
+
+<h1>Parked Vehicles</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                OwnerName
+            </th>
+            <th>
+                PersonalNumber
+            </th>
+            <th>
+                Membership
+            </th>
+            <th>
+               ParkingLot
+            </th>
+            <th>
+               RegistrationNumber
+            </th>
+            <th>
+                Color
+            </th>
+            <th>
+                ModelType
+            </th>
+            <th>
+               Brand
+            </th>
+            @* <th>
+            NumWheels
+            </th>
+            <th>
+            Type
+            </th> *@
+            <th>
+                ArrivalTime
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonalNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Membership)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkingLot)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.NumWheels)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+

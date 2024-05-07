@@ -12,7 +12,7 @@ namespace Garage3._0.Entites
         public string Brand { get; set; }
 
         // Navigation property
-        public ICollection<Ownership> Ownerships { get; set; }
-        public VehicleType VehicleType { get; set; }
+        public ICollection<Ownership>? Ownerships { get; set; }
+        public VehicleType? VehicleType { get; set; }
     }
 }

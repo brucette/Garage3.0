@@ -9,6 +9,6 @@
         public string VehicleId { get; set; } // Foreign key
 
         // Navigation property 
-        public Ownership Ownership { get; set; }
+        public Ownership? Ownership { get; set; }
     }
 }

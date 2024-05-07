@@ -34,6 +34,10 @@ namespace Garage3._0.Data
             .HasForeignKey<VehicleType>(t => t.VehicleId)
             .IsRequired();
 
+            /*modelBuilder.Entity<Parking>()
+            .Property(p => p.Ownership)
+            .IsRequired(false); // Make Ownership optional*/
+
             //Configure foregin keys?
             // This section can be removed
             /*

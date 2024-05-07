@@ -64,7 +64,7 @@ namespace Garage3._0.Controllers
                 {
                     var vehicle = new Vehicle
                     {
-                        Id = viewModel.RegisterNumber,
+                        Id = viewModel.RegisterNumber.ToUpper().Trim(),
                         Color = viewModel.Color,
                         Brand = viewModel.Brand,
                         ModelType = viewModel.ModelType
@@ -137,6 +137,16 @@ namespace Garage3._0.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                foreach (var modelStateEntry in ModelState.Values)
+                {
+                    foreach (var error in modelStateEntry.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
             }
             return View(vehicle);
         }
