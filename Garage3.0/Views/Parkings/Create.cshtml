@@ -1,4 +1,6 @@
-﻿@model Garage3._0.Entites.Parking
+﻿@using Garage3._0.Services
+@model Garage3._0.Entites.Parking
+@inject IGetDataService service
 
 @{
     ViewData["Title"] = "Create";
@@ -22,12 +24,35 @@
                 <input asp-for="ArrivalTime" class="form-control" />
                 <span asp-validation-for="ArrivalTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="VehicleId" class="control-label"></label>
                 <input asp-for="VehicleId" class="form-control" />
                 <span asp-validation-for="VehicleId" class="text-danger"></span>
-            </div>
-
+            </div> *@
+            @* Select VehicleId *@
+            <div class="form-group">
+                <label asp-for="VehicleId" class="control-label"></label>
+                <select class="form-control" name="VehicleId" asp-items="await service.GetVehicleIdsAsync()">
+            <option value="">Select vehicle</option>
+            </select>
+            <span asp-validation-for="VehicleId" class="text-danger"></span>
+            </div> 
+            @* Select ownership *@
+            @* <div class="form-group">
+                <label asp-for="Ownership" class="control-label"></label>
+                <select class="form-control" name="Ownership" asp-items="await service.GetOwnershipsAsync()">
+                    <option value="">Select member and vehicle</option>
+                </select>
+                <span asp-validation-for="Ownership" class="text-danger"></span>
+            </div> *@
+            @* OR Select Vehicle? *@
+            @* <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label"></label>
+                <select class="form-control" name="VehicleTypeId" asp-items="await service.GetVehicleTypesAsync()">
+                    <option value="">Select vehicle type</option>
+                </select>
+                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

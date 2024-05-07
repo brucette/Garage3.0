@@ -9,6 +9,7 @@ using Garage3._0.Data;
 using Garage3._0.Entites;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Garage3._0.ModelView;
+using NuGet.Protocol;
 
 namespace Garage3._0.Controllers
 {
@@ -27,7 +28,6 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
-
         public async Task<IActionResult> ParkedVehicles()
         {
             var parkedData = await _context.Parkings
@@ -35,6 +35,7 @@ namespace Garage3._0.Controllers
                     .ThenInclude(m => m.Member)
                 .Include(p => p.Ownership)
                     .ThenInclude(v => v.Vehicle)
+                    .ThenInclude(v => v.VehicleType)
                 .ToListAsync();
 
             if (parkedData == null)
@@ -46,6 +47,10 @@ namespace Garage3._0.Controllers
 
             foreach (var parkedVehicle in parkedData)
             {
+                //var vehicleType = new VehicleType
+                //{
+                    //NumWheels = parkedVehicle.VehicleId
+                //}; 
 
                 var viewModel = new GarageViewModel
                 {
@@ -58,14 +63,13 @@ namespace Garage3._0.Controllers
                     Color = parkedVehicle.Ownership.Vehicle.Color,
                     ModelType = parkedVehicle.Ownership.Vehicle.ModelType,
                     Brand = parkedVehicle.Ownership.Vehicle.Brand,
-                    //NumWheels = parkedData.Ownership.Vehicle.VehicleType.NumWheels
-                    //Type = parkedData.Ownership.Vehicle.VehicleType.Type
 
+                    Type = parkedVehicle.Vehicle.VehicleType.Type,
+                    NumWheels = parkedVehicle.Vehicle.VehicleType.NumWheels
                 };
 
                 viewModelList.Add(viewModel);
             }
-
 
             return View(viewModelList);
         }
@@ -114,8 +118,14 @@ namespace Garage3._0.Controllers
                         return View(parking);
                     }
 
-                    // Assign the ownership to the parking
+                    // Find the vehicle by registration number
+                    var vehicle = await _context.Vehicle
+                        .FirstOrDefaultAsync(v => v.Id == parking.VehicleId);
+
+                    // Assign the ownership and vehicle to the parking
                     parking.Ownership = ownership;
+                    parking.Vehicle = vehicle;
+
 
                     // Add the parking to the context and save changes
                     _context.Parkings.Add(parking);

@@ -15,7 +15,9 @@ namespace Garage3._0.Data
         }
 
         public DbSet<Member> Members { get; set; } = default!;
-        //public DbSet<Vehicle> Vehicles { get; set; } = default!;
+
+        public DbSet<Vehicle> Vehicle { get; set; } = default!;
+
         public DbSet<Ownership> Ownerships { get; set; } = default!;
         public DbSet<Parking> Parkings { get; set; } = default!;
         public DbSet<Receipt> Receipts { get; set; } = default!;
@@ -53,8 +55,7 @@ namespace Garage3._0.Data
                 .HasForeignKey(o => o.VehicleId);
             */
         }
-        public DbSet<Garage3._0.Entites.Vehicle> Vehicle { get; set; } = default!;
-        //public IEnumerable<object> VehicleType { get; internal set; }
+        
 
         // något här vetefan vad bara
     }

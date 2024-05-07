@@ -16,6 +16,7 @@ namespace Garage3._0.Entites
 
         // Navigation property
         public ICollection<Ownership>? Ownerships { get; set; }
-        public VehicleType? VehicleType { get; set; }
+
+        public VehicleType VehicleType { get; set; }
     }
 }

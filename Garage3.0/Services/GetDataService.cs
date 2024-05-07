@@ -33,5 +33,25 @@ namespace Garage3._0.Services
             }).ToListAsync();
             //throw new NotImplementedException();
         }
+
+        //public async Task<IEnumerable<SelectListItem>> GetOwnershipsAsync()
+        //{
+        //    return await context.Ownerships.Select(o => new SelectListItem
+        //    {
+        //        Text = $"Member: {o.MemberId} | Vehicle: {o.VehicleId}",
+        //        Value = o.VehicleId.ToString()
+        //    }).ToListAsync();
+        //    //throw new NotImplementedException();
+        //}
+
+        public async Task<IEnumerable<SelectListItem>> GetVehicleIdsAsync()
+        {
+            return await context.Vehicle.Select(v => new SelectListItem
+            {
+                Text = v.Id,
+                Value = v.Id.ToString()
+            }).ToListAsync();
+            //throw new NotImplementedException();
+        }
     } 
 }

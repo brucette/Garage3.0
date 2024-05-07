@@ -4,6 +4,7 @@ using Garage3._0.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3._0.Migrations
 {
     [DbContext(typeof(Garage3_0Context))]
-    partial class Garage3_0ContextModelSnapshot : ModelSnapshot
+    [Migration("20240507121947_AddVehicleTypeToVehicle")]
+    partial class AddVehicleTypeToVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,11 +83,9 @@ namespace Garage3._0.Migrations
 
                     b.Property<string>("VehicleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
 
                     b.HasIndex("OwnershipMemberId", "OwnershipVehicleId");
 
@@ -198,19 +199,11 @@ namespace Garage3._0.Migrations
 
             modelBuilder.Entity("Garage3._0.Entites.Parking", b =>
                 {
-                    b.HasOne("Garage3._0.Entites.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Garage3._0.Entites.Ownership", "Ownership")
                         .WithMany("Parkings")
                         .HasForeignKey("OwnershipMemberId", "OwnershipVehicleId");
 
                     b.Navigation("Ownership");
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.Receipt", b =>

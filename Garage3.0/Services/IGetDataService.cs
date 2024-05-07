@@ -9,5 +9,10 @@ namespace Garage3._0.Services
         Task<IEnumerable<SelectListItem>> GetVehicleTypesAsync();
 
         Task<IEnumerable<SelectListItem>> GetMemberIdsAsync();
+
+        //Task<IEnumerable<SelectListItem>> GetOwnershipsAsync();
+
+        Task<IEnumerable<SelectListItem>> GetVehicleIdsAsync();
+
     }
 }

@@ -26,6 +26,7 @@ namespace Garage3._0.Controllers
             var vehicles = await _context.Vehicle
                 .Include(v => v.Ownerships)
                     .ThenInclude(o => o.Member)
+                .Include(v => v.VehicleType) // Include VehicleType information
                 .ToListAsync();
 
             return View(vehicles);
@@ -75,6 +76,11 @@ namespace Garage3._0.Controllers
                         ModelType = viewModel.ModelType,
                         VehicleTypeId = viewModel.VehicleTypeId
                     };
+
+                    var vehicleType = await _context.VehicleTypes.FirstOrDefaultAsync(t => t.VehicleTypeId == viewModel.VehicleTypeId);
+
+                    vehicle.VehicleType = vehicleType;
+
                     _context.Add(vehicle);
 
                     var ownership = new Ownership

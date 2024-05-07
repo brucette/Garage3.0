@@ -10,5 +10,7 @@
 
         // Navigation property 
         public Ownership? Ownership { get; set; }
+
+        public Vehicle? Vehicle { get; set; }
     }
 }
