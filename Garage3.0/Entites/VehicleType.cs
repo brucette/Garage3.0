@@ -6,7 +6,6 @@
         public string Type { get; set; }
         public int NumWheels { get; set; }
 
-
         // DO WE NEED THESE? :
         // public string VehicleId { get; set; }//foreign key
         // public Vehicle Vehicle { get; set; }

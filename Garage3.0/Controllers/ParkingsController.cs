@@ -63,7 +63,7 @@ namespace Garage3._0.Controllers
                     Color = parkedVehicle.Ownership.Vehicle.Color,
                     ModelType = parkedVehicle.Ownership.Vehicle.ModelType,
                     Brand = parkedVehicle.Ownership.Vehicle.Brand,
-
+                    TotalParkingTime = DateTime.Now - parkedVehicle.ArrivalTime,
                     Type = parkedVehicle.Vehicle.VehicleType.Type,
                     NumWheels = parkedVehicle.Vehicle.VehicleType.NumWheels
                 };

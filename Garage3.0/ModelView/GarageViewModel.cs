@@ -1,4 +1,5 @@
 ﻿using Microsoft.DotNet.Scaffolding.Shared.Project;
+using System.ComponentModel.DataAnnotations;
 
 namespace Garage3._0.ModelView
 {
@@ -12,6 +13,9 @@ namespace Garage3._0.ModelView
         //parking information
         public int ParkingLot { get; set; }
         public DateTime ArrivalTime { get; set; }
+        public TimeSpan TotalParkingTime { get; set; }
+
+        public string DisplayTime => $"{TotalParkingTime.Days} days, {TotalParkingTime.Hours} h {TotalParkingTime.Minutes} min";
 
         //Vehicle information
         public string RegistrationNumber { get; set; }
