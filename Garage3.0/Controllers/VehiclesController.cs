@@ -32,6 +32,18 @@ namespace Garage3._0.Controllers
             return View(vehicles);
         }
 
+
+        // GET: VehicleTypes
+        public async Task<IActionResult> IndexVehicleTypes()
+        {
+            var vehicleTypes = await _context.VehicleTypes
+                .Include(vt => vt.VehicleTypeId)
+                .ToListAsync();
+
+            return View(vehicleTypes);
+        }
+
+
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(string id)
         {

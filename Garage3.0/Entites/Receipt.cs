@@ -9,11 +9,9 @@ namespace Garage3._0.Entites
         public DateTime CheckOut { get; set; }
         public TimeSpan TotParkingTime { get; set; }
         public double Price { get; set; }
-
-        //foregin key 
         public string VehicleId { get; set; }
 
         //Navigation property
-        public Ownership Ownership { get; set; }
+        public Ownership? Ownership { get; set; }
     }
 }

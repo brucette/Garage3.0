@@ -210,18 +210,70 @@ namespace Garage3._0.Controllers
             return View(parking);
         }
 
-        // POST: Parkings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var parking = await _context.Parkings.FindAsync(id);
+            /*var parking = await _context.Parkings
+                .Include(p => p.Ownership)
+                .FirstOrDefaultAsync(m => m.Id == id);*/
+
+            var parking = await _context.Parkings
+               .Include(p => p.Ownership)
+                   .ThenInclude(m => m.Member)
+               .Include(p => p.Ownership)
+                   .ThenInclude(v => v.Vehicle)
+               .FirstOrDefaultAsync();
+
             if (parking != null)
             {
+
+                // Calculate receipt details
+                var checkOutTime = DateTime.Now;
+                var ParkingPrice = 1; // Assuming price is 1kr per minute
+                var totalParkingTime = (checkOutTime - parking.ArrivalTime);
+                var convertedTotParkingTime = Math.Round((double)totalParkingTime.TotalMinutes, 2);
+                var price = Math.Round(convertedTotParkingTime * ParkingPrice, 2);
+
+                var viewModel = new ReceiptViewModel
+                {
+                    PersonNumber = parking.Ownership.MemberId,
+                    RegistrationNumber = parking.VehicleId,
+                    VehicleType = parking.Ownership.Vehicle.VehicleTypeId,
+                    Color = parking.Ownership.Vehicle.Color,
+                    Model = parking.Ownership.Vehicle.ModelType,
+                    Brand = parking.Ownership.Vehicle.Brand,
+                    CheckInTime = parking.ArrivalTime,
+                    CheckOutTime = checkOutTime,
+                    TotalParkingTimeInMinutes = totalParkingTime,
+                    Price = price
+
+                };
+
+                // Create receipt entity
+                var receipt = new Receipt
+                {
+                    ArrivalTime = parking.ArrivalTime,
+                    CheckOut = checkOutTime,
+                    TotParkingTime = totalParkingTime,
+                    Price = price,
+                    VehicleId = parking.VehicleId,
+                    Ownership = parking.Ownership // Assign the ownership
+                };
+
+                // Add receipt to context
+                _context.Receipts.Add(receipt);
+
+                // Remove parked vehicle
                 _context.Parkings.Remove(parking);
+
+                // Save changes
+                await _context.SaveChangesAsync();
+
+                // Pass viewModel to the view
+                return View("ViewReceipt", viewModel);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -229,5 +281,6 @@ namespace Garage3._0.Controllers
         {
             return _context.Parkings.Any(e => e.Id == id);
         }
+
     }
 }
