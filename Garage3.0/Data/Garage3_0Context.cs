@@ -20,7 +20,7 @@ namespace Garage3._0.Data
         public DbSet<Parking> Parkings { get; set; } = default!;
         public DbSet<Receipt> Receipts { get; set; } = default!;
         
-        //public DbSet<VehicleType> VehicleTypes { get; set; } = default!;
+        public DbSet<VehicleType> VehicleTypes { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,11 +29,11 @@ namespace Garage3._0.Data
             modelBuilder.Entity<Ownership>().HasKey(o => new { o.MemberId, o.VehicleId });
 
             //needs to create a connection between Vehicle and VehicleType
-            modelBuilder.Entity<Vehicle>()
-            .HasOne(v => v.VehicleType)
-            .WithOne(t => t.Vehicle)
-            .HasForeignKey<VehicleType>(t => t.VehicleId)
-            .IsRequired();
+            //modelBuilder.Entity<Vehicle>()
+            //.HasOne(v => v.VehicleType)
+            //.WithOne(t => t.Vehicle)
+            //.HasForeignKey<VehicleType>(t => t.VehicleId)
+            //.IsRequired();
 
             //Configure foregin keys?
             // This section can be removed
@@ -50,7 +50,7 @@ namespace Garage3._0.Data
             */
         }
         public DbSet<Garage3._0.Entites.Vehicle> Vehicle { get; set; } = default!;
-        public IEnumerable<object> VehicleType { get; internal set; }
+        //public IEnumerable<object> VehicleType { get; internal set; }
 
         // något här vetefan vad bara
     }

@@ -4,6 +4,7 @@ using Garage3._0.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3._0.Migrations
 {
     [DbContext(typeof(Garage3_0Context))]
-    partial class Garage3_0ContextModelSnapshot : ModelSnapshot
+    [Migration("20240506141203_RemoveVehcileIdFromVehicle")]
+    partial class RemoveVehcileIdFromVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,29 +157,7 @@ namespace Garage3._0.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleTypeId");
-
                     b.ToTable("Vehicle");
-                });
-
-            modelBuilder.Entity("Garage3._0.Entites.VehicleType", b =>
-                {
-                    b.Property<int>("VehicleTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleTypeId"));
-
-                    b.Property<int>("NumWheels")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("VehicleTypeId");
-
-                    b.ToTable("VehicleTypes");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.Ownership", b =>
@@ -218,17 +199,6 @@ namespace Garage3._0.Migrations
                         .IsRequired();
 
                     b.Navigation("Ownership");
-                });
-
-            modelBuilder.Entity("Garage3._0.Entites.Vehicle", b =>
-                {
-                    b.HasOne("Garage3._0.Entites.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.Member", b =>

@@ -1,6 +1,9 @@
 ﻿@using Garage3._0.Services
+@using Garage3._0.Entites
 @model Garage3._0.ModelView.AddVehicleModelView
-@inject IGetVehicleTypesService service
+@* @inject IGetVehicleTypesService service *@
+@inject IGetDataService service
+
 
 @{
     ViewData["Title"] = "Create";
@@ -36,18 +39,31 @@
             </div>
             <div class="form-group">
                 <label asp-for="OwnerPersonalNumber" class="control-label"></label>
-                <input asp-for="OwnerPersonalNumber" class="form-control" />
+                <select class="form-control" name="OwnerPersonalNumber" asp-items="await service.GetMemberIdsAsync()">
+                    <option value="">Select owner's Id</option>
+                </select>
                 <span asp-validation-for="OwnerPersonalNumber" class="text-danger"></span>
             </div>
-            @* Slect the vehicle type id *@
+            @* Select the vehicle type id *@
             <div class="form-group">
                 <label asp-for="VehicleTypeId" class="control-label"></label>
                 <select class="form-control" name="VehicleTypeId" asp-items="await service.GetVehicleTypesAsync()">
                     <option value="">Select vehicle type</option>
-
                 </select>
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
             </div>
+           
+          @*   <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label"></label>
+                <select class="form-control" name="VehicleTypeId" asp-items="await service2.GetDataAsync(v => new SelectListItem
+                {
+                    Text = v.Type,
+                    Value = v.VehicleTypeId.ToString()
+                })">
+                    <option value="">Select vehicle type</option>
+                </select>
+                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -1,14 +1,15 @@
 ﻿using Garage3._0.Data;
+using Garage3._0.Entites;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Garage3._0.Services
 {
-    public class GetVehicleTypesService : IGetVehicleTypesService
+    public class GetDataService : IGetDataService
     {
         private readonly Garage3_0Context context;
 
-        public GetVehicleTypesService(Garage3_0Context context)
+        public GetDataService(Garage3_0Context context)
         {
             this.context = context;
         }
@@ -32,5 +33,5 @@ namespace Garage3._0.Services
             }).ToListAsync();
             //throw new NotImplementedException();
         }
-    }
+    } 
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Garage3._0.Data;
+using Garage3._0.Services;
+
 namespace Garage3._0
 {
     public class Program
@@ -13,6 +15,10 @@ namespace Garage3._0
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //builder.Services.AddScoped<IGetVehicleTypesService, GetVehicleTypesService>();
+            builder.Services.AddScoped<IGetDataService, GetDataService>();
+
 
             var app = builder.Build();
 

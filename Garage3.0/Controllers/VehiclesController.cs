@@ -67,7 +67,8 @@ namespace Garage3._0.Controllers
                         Id = viewModel.RegisterNumber,
                         Color = viewModel.Color,
                         Brand = viewModel.Brand,
-                        ModelType = viewModel.ModelType
+                        ModelType = viewModel.ModelType,
+                        VehicleTypeId = viewModel.VehicleTypeId
                     };
                     _context.Add(vehicle);
 
@@ -81,7 +82,6 @@ namespace Garage3._0.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-
             }
             else 
             {
