@@ -11,6 +11,9 @@ namespace Garage3._0.Entites
         public string ModelType { get; set; }
         public string Brand { get; set; }
 
+        // Add foreign key for vehicletype
+        public int VehicleTypeId { get; set; }
+
         // Navigation property
         public ICollection<Ownership>? Ownerships { get; set; }
         public VehicleType? VehicleType { get; set; }

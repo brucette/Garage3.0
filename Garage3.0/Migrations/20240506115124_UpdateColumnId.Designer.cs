@@ -4,6 +4,7 @@ using Garage3._0.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3._0.Migrations
 {
     [DbContext(typeof(Garage3_0Context))]
-    partial class Garage3_0ContextModelSnapshot : ModelSnapshot
+    [Migration("20240506115124_UpdateColumnId")]
+    partial class UpdateColumnId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,18 +157,16 @@ namespace Garage3._0.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleTypeId");
-
                     b.ToTable("Vehicle");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.VehicleType", b =>
                 {
-                    b.Property<int>("VehicleTypeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleTypeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("NumWheels")
                         .HasColumnType("int");
@@ -174,9 +175,16 @@ namespace Garage3._0.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("VehicleTypeId");
+                    b.Property<string>("VehicleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("VehicleTypes");
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId")
+                        .IsUnique();
+
+                    b.ToTable("VehicleType");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.Ownership", b =>
@@ -220,15 +228,15 @@ namespace Garage3._0.Migrations
                     b.Navigation("Ownership");
                 });
 
-            modelBuilder.Entity("Garage3._0.Entites.Vehicle", b =>
+            modelBuilder.Entity("Garage3._0.Entites.VehicleType", b =>
                 {
-                    b.HasOne("Garage3._0.Entites.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
+                    b.HasOne("Garage3._0.Entites.Vehicle", "Vehicle")
+                        .WithOne("VehicleType")
+                        .HasForeignKey("Garage3._0.Entites.VehicleType", "VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("VehicleType");
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Garage3._0.Entites.Member", b =>
@@ -246,6 +254,9 @@ namespace Garage3._0.Migrations
             modelBuilder.Entity("Garage3._0.Entites.Vehicle", b =>
                 {
                     b.Navigation("Ownerships");
+
+                    b.Navigation("VehicleType")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

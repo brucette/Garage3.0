@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3._0.Data;
 using Garage3._0.Entites;
+using Garage3._0.ModelView;
 
 namespace Garage3._0.Controllers
 {
@@ -79,6 +80,19 @@ namespace Garage3._0.Controllers
                 }
             }
             return View(member);
+        }
+
+        // GET: Summary
+        public async Task<IActionResult> MembersOverview()
+        {
+            var members = _context.Members.Select(m => new MembersViewModel
+            {
+                FirstName = m.FirstName,
+                LastName = m.LastName,
+                NumberOfVehicles = m.Ownerships.Count
+            });
+
+            return View(await members.ToListAsync());
         }
 
         // GET: Members/Edit/5
