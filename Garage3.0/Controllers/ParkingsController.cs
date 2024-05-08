@@ -27,8 +27,7 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
-        //is focused upon viewmodel of garage
-        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber)
+        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber, string vehicleType)
         {
             var query = _context.Parkings
                     .Include(p => p.Ownership)
@@ -46,6 +45,11 @@ namespace Garage3._0.Controllers
             {
                 // Otherwise, filter by regNumber
                 query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            if (!string.IsNullOrWhiteSpace(vehicleType))
+            {
+                query = query.Where(p => p.Ownership.Vehicle.VehicleType.Type == vehicleType);
             }
 
             var model = await query.ToListAsync();
@@ -73,37 +77,13 @@ namespace Garage3._0.Controllers
                 Brand = p.Ownership.Vehicle.Brand
             }).ToList();
 
+            // Repopulate ViewBag.VehicleTypes for dropdown in case it's needed in the view
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                                        .Select(vt => vt.Type)
+                                        .Distinct()
+                                        .ToListAsync();
+
             return View("ParkedVehicles", viewModelList);
-        }
-
-        //is docused upon parking database index
-        public async Task<IActionResult> SearchRegNumber(string regNumber)
-        {
-            var query = _context.Parkings.AsQueryable(); // Start with a base query
-
-            if (string.IsNullOrWhiteSpace(regNumber))
-            {
-                // If regNumber field is empty, retrieve all vehicles
-                query = query.Where(p => true);
-            }
-            else
-            {
-                // Otherwise, filter by regNumber
-                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
-            }
-
-            var model = await query.ToListAsync();
-
-            if (!model.Any())
-            {
-                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
-            }
-            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
-            {
-                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
-                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
-            }
-            return View("Index", model);
         }
 
 
@@ -120,6 +100,12 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                            .Select(vt => vt.Type)
+                            .Distinct()
+                            .ToListAsync();
+
 
             var viewModelList = new List<GarageViewModel>(); // List to hold view models
 
@@ -146,7 +132,8 @@ namespace Garage3._0.Controllers
             }
 
 
-            return View(viewModelList);
+            return View("ParkedVehicles", viewModelList);
+
         }
 
         // GET: Parkings/Details/5
