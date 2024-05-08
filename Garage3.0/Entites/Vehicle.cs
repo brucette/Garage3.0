@@ -14,6 +14,7 @@ namespace Garage3._0.Entites
         public string Brand { get; set; }
 
         // Add foreign key for vehicletype
+        [Display(Name = "Vehicle Type Id")]
         public int VehicleTypeId { get; set; }
 
         // Navigation property
