@@ -20,6 +20,7 @@ namespace Garage3._0.Controllers
             _context = context;
         }
 
+
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
@@ -41,6 +42,39 @@ namespace Garage3._0.Controllers
                 .ToListAsync();
 
             return View(vehicleTypes);
+        }
+
+
+        //can make this to a serach service later?
+        public async Task<IActionResult> SearchRegNumber(string regNumber)
+        {
+            var query = _context.Vehicle.AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true);
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.Id == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().Id.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+
+            return View("Index", model);
         }
 
 

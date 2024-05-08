@@ -9,6 +9,29 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@* make this a partial view later? *@
+<form asp-action="SearchRegNumber" asp-controller="Vehicles" method="get">
+    <div class="input-group">
+        <input type="text" id="regNumberSearch" name="regNumber" class="form-control" placeholder="Search for registration number" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+    @if (TempData["NoVehicleFound"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["NoVehicleFound"]
+        </div>
+    }
+
+    @if (TempData["VehicleFound"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["VehicleFound"]
+        </div>
+    }
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -39,9 +62,43 @@
             <th></th>
         </tr>
     </thead>
+    @*check here if there will be error when merging later*@
     <tbody>
         @foreach (var item in Model)
         {
+            <tr>
+                <td>
+                    @if (item.Ownerships != null && item.Ownerships.Any())
+                    {
+                        @Html.DisplayFor(modelItem => item.Ownerships.First().Member.Id)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.VehicleTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.NumWheels)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.Type)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
             foreach (var ownership in item.Ownerships)
             {
                 <tr>
@@ -78,5 +135,4 @@
             }
         }
 
-    </tbody>
 </table>

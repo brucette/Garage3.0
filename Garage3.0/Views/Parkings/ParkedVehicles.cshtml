@@ -9,12 +9,18 @@
 <form asp-action="SearchParkedVehiclesByRegNumber" asp-controller="Parkings" method="get">
     <div class="input-group">
         <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
+        <select id="vehicleType" name="vehicleType" class="form-control">
+            <option value="">-- All --</option>
+            @foreach (var type in ViewBag.VehicleTypes)
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
         <div class="input-group-append">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </div>
 </form>
-
 
 @if (TempData["NoVehicleFound"] != null)
 {

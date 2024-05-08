@@ -28,7 +28,7 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
-        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber)
+        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber, string vehicleType)
         {
             var query = _context.Parkings
                     .Include(p => p.Ownership)
@@ -46,6 +46,11 @@ namespace Garage3._0.Controllers
             {
                 // Otherwise, filter by regNumber
                 query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            if (!string.IsNullOrWhiteSpace(vehicleType))
+            {
+                query = query.Where(p => p.Ownership.Vehicle.VehicleType.Type == vehicleType);
             }
 
             var model = await query.ToListAsync();
@@ -73,6 +78,12 @@ namespace Garage3._0.Controllers
                 Brand = p.Ownership.Vehicle.Brand
             }).ToList();
 
+            // Repopulate ViewBag.VehicleTypes for dropdown in case it's needed in the view
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                                        .Select(vt => vt.Type)
+                                        .Distinct()
+                                        .ToListAsync();
+
             return View("ParkedVehicles", viewModelList);
         }
 
@@ -91,6 +102,12 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                            .Select(vt => vt.Type)
+                            .Distinct()
+                            .ToListAsync();
+
 
             var viewModelList = new List<GarageViewModel>(); // List to hold view models
 
@@ -120,7 +137,9 @@ namespace Garage3._0.Controllers
                 viewModelList.Add(viewModel);
             }
 
-            return View(viewModelList);
+
+            return View("ParkedVehicles", viewModelList);
+
         }
 
         // GET: Parkings/Details/5
