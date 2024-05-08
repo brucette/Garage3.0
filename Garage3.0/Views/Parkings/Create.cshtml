@@ -19,9 +19,11 @@
                 <input asp-for="ParkingLotNumber" class="form-control" />
                 <span asp-validation-for="ParkingLotNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <!--made so we can't see the arrivaltime on the site, but part of code is needed so that we don't get 0001-00-00 00:00:00 datetime in database,
+                if we want to send the current arrivaltime to the database when created btn is clicked-->
+            <div class="form-group" style="display:none">
                 <label asp-for="ArrivalTime" class="control-label"></label>
-                <input asp-for="ArrivalTime" class="form-control" />
+                <input asp-for="ArrivalTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
                 <span asp-validation-for="ArrivalTime" class="text-danger"></span>
             </div>
             @* <div class="form-group">

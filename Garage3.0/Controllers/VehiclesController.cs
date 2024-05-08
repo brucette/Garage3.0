@@ -77,6 +77,15 @@ namespace Garage3._0.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                // Check if the registration number already exists
+                var existingVehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == viewModel.RegisterNumber.ToUpper().Trim());
+                if (existingVehicle != null)
+                {
+                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number is already in use.");
+                    return View(viewModel);
+                }
+
                 var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == viewModel.OwnerPersonalNumber);
                 if (member != null)
                 {
