@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Garage3._0.Data;
 using Garage3._0.Entites;
 using Garage3._0.ModelView;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Garage3._0.Controllers
 {
@@ -44,13 +46,32 @@ namespace Garage3._0.Controllers
             }
 
             var member = await _context.Members
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(p => p.Ownerships)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (member == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            int numberOfVehicles = 0;
+            if (member.Ownerships != null)
+            {
+                numberOfVehicles = member.Ownerships.Count;
+            }
+
+            var viewModel = new MemberDetailsViewModel()
+            {
+                Id = member.Id,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                Membership = member.Membership,
+                Ownerships = member.Ownerships,
+                NumberOfVehicles = numberOfVehicles
+            };
+
+            return View(viewModel);
         }
 
         // GET: Members/Create

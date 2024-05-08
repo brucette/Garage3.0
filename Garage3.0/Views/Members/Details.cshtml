@@ -1,4 +1,6 @@
-﻿@model Garage3._0.Entites.Member
+﻿
+@*@model Garage3._0.Entites.Member*@
+@model Garage3._0.ModelView.MemberDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -33,6 +35,24 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NumberOfVehicles)
+        </dt>
+        @* OWNER VEHICLES *@
+        <dt class="col-sm-2">
+            Vehicles
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.NumberOfVehicles == 0)
+            {
+            <a>None</a>
+            }
+            else
+            {
+                @foreach (var ownership in Model.Ownerships)
+                {
+                    <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@ownership.VehicleId">@ownership.VehicleId</a>
+                    <br />
+                }
+            }
         </dd>
     </dl>
 </div>
