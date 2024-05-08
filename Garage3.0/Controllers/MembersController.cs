@@ -94,7 +94,9 @@ namespace Garage3._0.Controllers
                     IActionResult idValidityResult = CheckIdValidity(member.Id);
                     if (idValidityResult is BadRequestObjectResult)
                     {
-                        return idValidityResult;
+                        //return idValidityResult;
+                        SetFeedback("danger", "Sorry, you must be at least 18 years old to be member!");
+                        return View();
                     }
 
                     _context.Add(member);
@@ -231,7 +233,7 @@ namespace Garage3._0.Controllers
             }
 
             if (age < 18)
-                return BadRequest("You are under allowed age!");
+                return BadRequest("Bad request");
             else
                 return Ok(new { DateOfBirth = dateOfBirth });
         }
