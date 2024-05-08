@@ -107,6 +107,11 @@ namespace Garage3._0.Controllers
                     SetFeedback("danger", "The social security number was not in a correct format");
                     return View();
                 }
+                catch (DbUpdateException)
+                {
+                    SetFeedback("danger", "A member with that social security number already exists");
+                    return View();
+                }
             }
             else if (!ModelState.IsValid)
             {
