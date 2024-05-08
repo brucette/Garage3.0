@@ -26,10 +26,10 @@ namespace Garage3._0.Entites
         public string FullName => $"{FirstName} {LastName}";
 
         [Display(Name = "Parked Vehicles")]
-        public int NumberOfVehicles => Ownerships.Count();
+        public int NumberOfVehicles;
 
         // Navigation property
-        public ICollection<Ownership>? Ownerships = new List<Ownership>(); //{ get; set; }//Declare this null we don't require ownership to create a new member 
+        public ICollection<Ownership>? Ownerships { get; set; } //Declare this null we don't require ownership to create a new member 
     }
 }
 

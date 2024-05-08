@@ -23,7 +23,16 @@ namespace Garage3._0.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Members.ToListAsync());
+            var members = _context.Members.Select(m => new MemberIndexViewModel
+            {
+                Id = m.Id,
+                FirstName = m.FirstName,
+                LastName = m.LastName,
+                Membership = m.Membership,  
+                NumberOfVehicles = m.Ownerships.Count
+            });
+
+            return View(await members.ToListAsync());
         }
 
         // GET: Members/Details/5
