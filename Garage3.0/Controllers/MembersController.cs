@@ -91,14 +91,21 @@ namespace Garage3._0.Controllers
             {
                 try
                 {
+                    IActionResult idValidityResult = CheckIdValidity(member.Id);
+                    if (idValidityResult is BadRequestObjectResult)
+                    {
+                        return idValidityResult;
+                    }
+
                     _context.Add(member);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    SetFeedback("success", "Member was successfully registered!");
+                    return View();
                 }
-                catch (Exception ex)
+                catch (FormatException)
                 {
-                    Console.WriteLine(ex.Message);
-                    throw;
+                    SetFeedback("danger", "The social security number was not in a correct format");
+                    return View();
                 }
             }
             else if (!ModelState.IsValid)
@@ -199,6 +206,35 @@ namespace Garage3._0.Controllers
         private bool MemberExists(string id)
         {
             return _context.Members.Any(e => e.Id == id);
+        }
+
+
+        // AGE VERIFICATION: members are only 18 years or older 
+        public IActionResult CheckIdValidity(string Id)
+        {
+
+            string firstpart = Id.Substring(0, 8);
+            DateTime dateOfBirth;
+            dateOfBirth = DateTime.ParseExact(firstpart, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+
+            DateTime currentDate = DateTime.Today;
+            int age = currentDate.Year - dateOfBirth.Year;
+
+            if (currentDate.Month < dateOfBirth.Month || (currentDate.Month == dateOfBirth.Month && currentDate.Day < dateOfBirth.Day))
+            {
+                age--;
+            }
+
+            if (age < 18)
+                return BadRequest("You are under allowed age!");
+            else
+                return Ok(new { DateOfBirth = dateOfBirth });
+        }
+
+        private void SetFeedback(string messageType, string message)
+        {
+            ViewBag.Message = message;
+            ViewBag.MessageType = messageType;
         }
     }
 }

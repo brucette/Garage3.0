@@ -18,9 +18,14 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    
 }
 
+h1 {
+    color: black; /* Vit färg för text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Textskugga */
+}
 /* Hide navigation bars and print button when printing */
 @media print {
     .navbar {
@@ -31,3 +36,4 @@ body {
         display: none;
     }
 }
+
