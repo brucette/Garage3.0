@@ -8,6 +8,8 @@ namespace Garage3._0.Entites
         [Key]
         public string Id { get; set; }//RegisterNumber
         public string Color { get; set; }
+
+        [Display(Name = "Model")]
         public string ModelType { get; set; }
         public string Brand { get; set; }
 

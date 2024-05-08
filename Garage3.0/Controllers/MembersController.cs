@@ -82,20 +82,6 @@ namespace Garage3._0.Controllers
             return View(member);
         }
 
-        // GET: Summary
-        public async Task<IActionResult> MembersOverview()
-        {
-            var members = _context.Members.Select(m => new MembersViewModel
-            {
-                Id = m.Id,
-                FirstName = m.FirstName,
-                LastName = m.LastName,
-                NumberOfVehicles = m.Ownerships.Count
-            });
-
-            return View(await members.ToListAsync());
-        }
-
         // GET: Members/Edit/5
         public async Task<IActionResult> Edit(string id)
         {

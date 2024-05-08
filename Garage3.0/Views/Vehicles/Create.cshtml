@@ -6,12 +6,12 @@
 
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add vehicle";
 }
 
-<h1>Create</h1>
+<h1></h1>
 
-<h4>Vehicle</h4>
+<h4>Add a vehicle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,18 +52,6 @@
                 </select>
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
             </div>
-           
-          @*   <div class="form-group">
-                <label asp-for="VehicleTypeId" class="control-label"></label>
-                <select class="form-control" name="VehicleTypeId" asp-items="await service2.GetDataAsync(v => new SelectListItem
-                {
-                    Text = v.Type,
-                    Value = v.VehicleTypeId.ToString()
-                })">
-                    <option value="">Select vehicle type</option>
-                </select>
-                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
