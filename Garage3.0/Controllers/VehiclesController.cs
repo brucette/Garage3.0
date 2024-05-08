@@ -116,7 +116,7 @@ namespace Garage3._0.Controllers
                 var existingVehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == viewModel.RegisterNumber.ToUpper().Trim());
                 if (existingVehicle != null)
                 {
-                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number is already in use.");
+                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number already exists.");
                     return View(viewModel);
                 }
 

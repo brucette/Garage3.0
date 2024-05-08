@@ -59,6 +59,13 @@ namespace Garage3._0.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Check if the personal number already exists, i.e this means the member are alredy is registered
+                var existingPersonNumber= await _context.Members.FirstOrDefaultAsync(v => v.Id == member.Id);
+                if (existingPersonNumber != null)
+                {
+                    ModelState.AddModelError(nameof(member.Id), "This social security number is already registered.");
+                    return View(member);
+                }
                 try
                 {
                     _context.Add(member);
