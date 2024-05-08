@@ -47,11 +47,7 @@ namespace Garage3._0.Controllers
 
             foreach (var parkedVehicle in parkedData)
             {
-                //var vehicleType = new VehicleType
-                //{
-                    //NumWheels = parkedVehicle.VehicleId
-                //}; 
-
+               
                 var viewModel = new GarageViewModel
                 {
                     OwnerName = parkedVehicle.Ownership.Member.FullName,

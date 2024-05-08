@@ -5,7 +5,7 @@ namespace Garage3._0.ModelView
 {
     public class MembersViewModel
     {
-        //public string Id { get; set; }
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 

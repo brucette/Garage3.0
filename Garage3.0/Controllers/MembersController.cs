@@ -87,6 +87,7 @@ namespace Garage3._0.Controllers
         {
             var members = _context.Members.Select(m => new MembersViewModel
             {
+                Id = m.Id,
                 FirstName = m.FirstName,
                 LastName = m.LastName,
                 NumberOfVehicles = m.Ownerships.Count
