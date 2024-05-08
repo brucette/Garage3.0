@@ -6,6 +6,7 @@ namespace Garage3._0.Entites
     {
         [Key]
         [Required(ErrorMessage = "Social number is required")]
+        [Display(Name = "Person Number")]
         public string Id { get; set; } // here we will input personNumber
 
 

@@ -4,6 +4,7 @@ namespace Garage3._0.Entites
 {
     public class Parking
     {
+        [Display(Name = "Person Number")]
         public int Id { get; set; }
         public int ParkingLotNumber { get; set; }
 
