@@ -34,7 +34,14 @@
                     @Html.DisplayFor(modelItem => item.PersonalNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Membership)
+                    @if (item.Membership)
+                    {
+                        <span style="color:green;">&#10004;</span>
+                    }
+                    else
+                    {
+                        <span style="color:red;">&#10008;</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ParkingLot)
