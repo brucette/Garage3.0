@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Garage3._0.Data;
 using Garage3._0.Entites;
 using Garage3._0.ModelView;
+using Microsoft.AspNetCore.Http;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Garage3._0.Controllers
 {
@@ -59,6 +61,14 @@ namespace Garage3._0.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+                IActionResult idValidityResult = CheckIdValidity(member.Id);
+                if (idValidityResult is BadRequestObjectResult)
+                {
+                    return idValidityResult;
+                }
+
                 try
                 {
                     _context.Add(member);
@@ -183,5 +193,30 @@ namespace Garage3._0.Controllers
         {
             return _context.Members.Any(e => e.Id == id);
         }
+
+        // AGE VERIFICATION: members are only 18 years or older 
+        public IActionResult CheckIdValidity(string Id)
+        {
+                  
+            string firstpart = Id.Substring(0, 8);
+            DateTime dateOfBirth;
+            dateOfBirth = DateTime.ParseExact(firstpart, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+
+            DateTime currentDate = DateTime.Today;
+            int age = currentDate.Year - dateOfBirth.Year;
+
+            if (currentDate.Month < dateOfBirth.Month || (currentDate.Month == dateOfBirth.Month && currentDate.Day < dateOfBirth.Day))
+            {
+                age--;
+            }
+
+            if (age < 18)
+                return BadRequest("You are under allowed age!");
+            else
+                return Ok(new { DateOfBirth = dateOfBirth });
+            
+        }
+                   
     }
+    
 }
