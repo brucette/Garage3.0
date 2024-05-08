@@ -27,6 +27,7 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
+        //is focused upon viewmodel of garage
         public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber)
         {
             var query = _context.Parkings
@@ -73,6 +74,36 @@ namespace Garage3._0.Controllers
             }).ToList();
 
             return View("ParkedVehicles", viewModelList);
+        }
+
+        //is docused upon parking database index
+        public async Task<IActionResult> SearchRegNumber(string regNumber)
+        {
+            var query = _context.Parkings.AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true);
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+            return View("Index", model);
         }
 
 

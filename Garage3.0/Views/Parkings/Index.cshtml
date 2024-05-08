@@ -6,6 +6,29 @@
 
 <h1>Index</h1>
 
+<form asp-action="SearchParkedVehiclesByRegNumber" asp-controller="Parkings" method="get">
+    <div class="input-group">
+        <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+@if (TempData["NoVehicleFound"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["NoVehicleFound"]
+    </div>
+}
+
+@if (TempData["VehicleFound"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["VehicleFound"]
+    </div>
+}
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
