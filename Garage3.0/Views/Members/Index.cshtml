@@ -39,9 +39,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Membership)
-            </td>
+                <td>
+                    @if (item.Membership)
+                    {
+                        <span style="color:green;">&#10004;</span>
+                    }
+                    else
+                    {
+                        <span style="color:red;">&#10008;</span>
+                    }
+                </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
