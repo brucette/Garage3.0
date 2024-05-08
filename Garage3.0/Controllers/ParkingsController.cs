@@ -27,6 +27,55 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
+        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber)
+        {
+            var query = _context.Parkings
+                    .Include(p => p.Ownership)
+                        .ThenInclude(m => m.Member)
+                    .Include(p => p.Ownership)
+                        .ThenInclude(v => v.Vehicle)
+                    .AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true); 
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if(model.Any() && !string.IsNullOrWhiteSpace(regNumber)) 
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+            var viewModelList = model.Select(p => new GarageViewModel
+            {
+                OwnerName = p.Ownership.Member.FullName,
+                PersonalNumber = p.Ownership.Member.Id,
+                Membership = p.Ownership.Member.Membership,
+                ParkingLot = p.ParkingLotNumber,
+                ArrivalTime = p.ArrivalTime,
+                RegistrationNumber = p.Ownership.Vehicle.Id,
+                Color = p.Ownership.Vehicle.Color,
+                ModelType = p.Ownership.Vehicle.ModelType,
+                Brand = p.Ownership.Vehicle.Brand
+            }).ToList();
+
+            return View("ParkedVehicles", viewModelList);
+        }
+
+
         public async Task<IActionResult> ParkedVehicles()
         {
             var parkedData = await _context.Parkings
