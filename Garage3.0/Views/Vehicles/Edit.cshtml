@@ -13,6 +13,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="VehicleTypeId" /> <!-- Add this line -->
             <div class="form-group">
                 <label asp-for="Color" class="control-label"></label>
                 <input asp-for="Color" class="form-control" />
@@ -38,4 +39,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

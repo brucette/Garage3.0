@@ -71,7 +71,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => ownership.Member.Id)
+                        @if (item.Ownerships != null && item.Ownerships.Any())
+                        {
+                            @Html.DisplayFor(modelItem => ownership.Member.Id)
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => ownership.Vehicle.Id)
@@ -102,75 +105,6 @@
                 </tr>
                 
         }
-       @*  }
-            <tr>
-                <td>
-                    @if (item.Ownerships != null && item.Ownerships.Any())
-                    {
-                        @Html.DisplayFor(modelItem => item.Ownerships.First().Member.Id)
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleType.VehicleTypeId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleType.NumWheels)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VehicleType.Type)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        } *@
         }
     </tbody>
-           @* foreach (var ownership in item.Ownerships)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => ownership.Member.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => ownership.Vehicle.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Color)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModelType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Brand)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.VehicleTypeId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.NumWheels)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.Type)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>  
-            }
-        }*@
-
 </table>
