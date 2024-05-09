@@ -179,6 +179,18 @@ namespace Garage3._0.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             //check that the member doesn't have a vehicle in parking or connected vehicle before removing the member?
+            var memberHasParkedVehicles = await _context.Parkings.AnyAsync(p => p.Ownership.MemberId == id);
+
+            //check if the member has any connected vehicles
+            var memberHasConnectedVehicles = await _context.Vehicle.AnyAsync(v => v.Id == id);
+
+            if ( memberHasConnectedVehicles || memberHasParkedVehicles)
+            {
+                TempData["DeleteMemberError"] = "This member cannot be deleted because they have parked vehicle or connected vehicles in database";
+                return RedirectToAction(nameof(Delete));
+            }
+
+            // If the member doesn't have parked or connected vehicles, proceed with deletion
             var member = await _context.Members.FindAsync(id);
             if (member != null)
             {

@@ -333,6 +333,7 @@ namespace Garage3._0.Controllers
                    .ThenInclude(m => m.Member)
                .Include(p => p.Ownership)
                    .ThenInclude(v => v.Vehicle)
+                   .ThenInclude(vt => vt.VehicleType)
                .FirstOrDefaultAsync();
 
             if (parking != null)
@@ -349,7 +350,7 @@ namespace Garage3._0.Controllers
                 {
                     PersonNumber = parking.Ownership.MemberId,
                     RegistrationNumber = parking.VehicleId,
-                    VehicleType = parking.Ownership.Vehicle.VehicleType.VehicleTypeId,
+                    VehicleType = parking.Vehicle.VehicleType.Type,
                     Color = parking.Ownership.Vehicle.Color,
                     Model = parking.Ownership.Vehicle.ModelType,
                     Brand = parking.Ownership.Vehicle.Brand,
