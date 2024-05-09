@@ -9,12 +9,13 @@ namespace Garage3._0.Entites
         [Display(Name = "Registration Number")]
         public string Id { get; set; }//RegisterNumber
         public string Color { get; set; }
-        [Display(Name = "Model Type")]
+
+        [Display(Name = "Model")]
         public string ModelType { get; set; }
         public string Brand { get; set; }
 
         // Add foreign key for vehicletype
-        [Display(Name = "Vehicle Id")]
+        [Display(Name = "Vehicle Type Id")]
         public int VehicleTypeId { get; set; }
 
         // Navigation property

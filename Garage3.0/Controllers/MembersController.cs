@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Garage3._0.Data;
 using Garage3._0.Entites;
 using Garage3._0.ModelView;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Garage3._0.Controllers
 {
@@ -23,9 +25,19 @@ namespace Garage3._0.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
+            var members = _context.Members.Select(m => new MemberIndexViewModel
+            {
+                Id = m.Id,
+                FirstName = m.FirstName,
+                LastName = m.LastName,
+                Membership = m.Membership,
+                NumberOfVehicles = m.Ownerships.Count
+            }).OrderBy(m => m.FirstName.Substring(0, 2));
+
             //order the member list according to firstname and its 2 letters at beginning
-            var members = await _context.Members.OrderBy(m => m.FirstName.Substring(0,2)).ToListAsync();
-            return View(members);
+            //var members = await _context.Members.OrderBy(m => m.FirstName.Substring(0,2)).ToListAsync();
+
+            return View(await members.ToListAsync());
         }
 
         // GET: Members/Details/5
@@ -37,13 +49,32 @@ namespace Garage3._0.Controllers
             }
 
             var member = await _context.Members
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(p => p.Ownerships)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (member == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            int numberOfVehicles = 0;
+            if (member.Ownerships != null)
+            {
+                numberOfVehicles = member.Ownerships.Count;
+            }
+
+            var viewModel = new MemberDetailsViewModel()
+            {
+                Id = member.Id,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                Membership = member.Membership,
+                Ownerships = member.Ownerships,
+                NumberOfVehicles = numberOfVehicles
+            };
+
+            return View(viewModel);
         }
 
         // GET: Members/Create
@@ -70,14 +101,28 @@ namespace Garage3._0.Controllers
                 }
                 try
                 {
+                    IActionResult idValidityResult = CheckIdValidity(member.Id);
+                    if (idValidityResult is BadRequestObjectResult)
+                    {
+                        //return idValidityResult;
+                        SetFeedback("danger", "Sorry, you must be at least 18 years old to be member!");
+                        return View();
+                    }
+
                     _context.Add(member);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    SetFeedback("success", "Member was successfully registered!");
+                    return View();
                 }
-                catch (Exception ex)
+                catch (FormatException)
                 {
-                    Console.WriteLine(ex.Message);
-                    throw;
+                    SetFeedback("danger", "The social security number was not in a correct format");
+                    return View();
+                }
+                catch (DbUpdateException)
+                {
+                    SetFeedback("danger", "A member with that social security number already exists");
+                    return View();
                 }
             }
             else if (!ModelState.IsValid)
@@ -89,19 +134,6 @@ namespace Garage3._0.Controllers
                 }
             }
             return View(member);
-        }
-
-        // GET: Summary
-        public async Task<IActionResult> MembersOverview()
-        {
-            var members = _context.Members.Select(m => new MembersViewModel
-            {
-                FirstName = m.FirstName,
-                LastName = m.LastName,
-                NumberOfVehicles = m.Ownerships.Count
-            });
-
-            return View(await members.ToListAsync());
         }
 
         // GET: Members/Edit/5
@@ -204,6 +236,35 @@ namespace Garage3._0.Controllers
         private bool MemberExists(string id)
         {
             return _context.Members.Any(e => e.Id == id);
+        }
+
+
+        // AGE VERIFICATION: members are only 18 years or older 
+        public IActionResult CheckIdValidity(string Id)
+        {
+
+            string firstpart = Id.Substring(0, 8);
+            DateTime dateOfBirth;
+            dateOfBirth = DateTime.ParseExact(firstpart, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+
+            DateTime currentDate = DateTime.Today;
+            int age = currentDate.Year - dateOfBirth.Year;
+
+            if (currentDate.Month < dateOfBirth.Month || (currentDate.Month == dateOfBirth.Month && currentDate.Day < dateOfBirth.Day))
+            {
+                age--;
+            }
+
+            if (age < 18)
+                return BadRequest("Bad request");
+            else
+                return Ok(new { DateOfBirth = dateOfBirth });
+        }
+
+        private void SetFeedback(string messageType, string message)
+        {
+            ViewBag.Message = message;
+            ViewBag.MessageType = messageType;
         }
     }
 }

@@ -25,7 +25,17 @@ namespace Garage3._0.Controllers
         // GET: Parkings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Parkings.ToListAsync());
+            var vehicleData = _context.Parkings.Select(p => new ParkViewModel
+            {
+                ParkingLotNumber = p.ParkingLotNumber,
+                ArrivalTime = p.ArrivalTime,
+                VehicleId = p.Ownership.Vehicle.Id,
+                OwnerName = p.Ownership.Member.FullName,
+                Type = p.Vehicle.VehicleType.Type,
+            });
+
+
+            return View(await vehicleData.ToListAsync());
         }
 
         public async Task<IActionResult> SearchByRegNumber(string regNumber)
@@ -155,11 +165,7 @@ namespace Garage3._0.Controllers
 
             foreach (var parkedVehicle in parkedData)
             {
-                //var vehicleType = new VehicleType
-                //{
-                    //NumWheels = parkedVehicle.VehicleId
-                //}; 
-
+               
                 var viewModel = new GarageViewModel
                 {
                     OwnerName = parkedVehicle.Ownership.Member.FullName,

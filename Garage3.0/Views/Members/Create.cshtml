@@ -1,39 +1,40 @@
 ﻿@model Garage3._0.Entites.Member
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Register member";
 }
 
-<h1>Create</h1>
+<h1></h1>
 
-<h4>Member</h4>
+<h4>Register member</h4>
 <hr />
-
-<div class="BoxAroundLayout">
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create" method="post">
-                <div class="form-group">
-                    <label asp-for="Id" class="control-label">Social Security Number</label>
-                    <input asp-for="Id" class="form-control"/>
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FirstName" class="control-label">First Name</label>
-                    <input asp-for="FirstName" class="form-control" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label">Last Name</label>
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <input class="form-check-input" asp-for="Membership" />
-                    <label class="form-check-label" asp-for="Membership">Membership</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Id" class="control-label">Social Security Number</label>
+                <input asp-for="Id" class="form-control"/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <input class="form-check-input" asp-for="Membership" />
+                <label class="form-check-label" asp-for="Membership">Membership</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <div class="mt-2 alert alert-@ViewBag.MessageType" role="alert">
+                @ViewBag.Message
+            </div>
+        </form>
 
         </div>
     </div>
