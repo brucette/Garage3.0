@@ -23,7 +23,9 @@ namespace Garage3._0.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Members.ToListAsync());
+            //order the member list according to firstname and its 2 letters at beginning
+            var members = await _context.Members.OrderBy(m => m.FirstName.Substring(0,2)).ToListAsync();
+            return View(members);
         }
 
         // GET: Members/Details/5
@@ -176,6 +178,7 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            //check that the member doesn't have a vehicle in parking or connected vehicle before removing the member?
             var member = await _context.Members.FindAsync(id);
             if (member != null)
             {
