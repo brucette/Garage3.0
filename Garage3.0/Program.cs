@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Garage3._0.Data;
 using Garage3._0.Services;
+using Garage3._0.Entites;
 
 namespace Garage3._0
 {
@@ -40,6 +41,8 @@ namespace Garage3._0
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            DbInitalizer.Seed(app);
 
             app.Run();
         }

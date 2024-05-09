@@ -20,6 +20,7 @@ namespace Garage3._0.Controllers
             _context = context;
         }
 
+
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
@@ -43,6 +44,40 @@ namespace Garage3._0.Controllers
             return View(vehicleTypes);
         }
 
+
+        //can make this to a serach service later?
+        public async Task<IActionResult> SearchRegNumber(string regNumber)
+        {
+            var query = _context.Vehicle
+                .Include(p => p.Ownerships)
+                    .ThenInclude(m => m.Member)
+                .AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true);
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.Id == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().Id.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+            return View("Index", model);
+        }
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(string id)
@@ -77,6 +112,15 @@ namespace Garage3._0.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                // Check if the registration number already exists
+                var existingVehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == viewModel.RegisterNumber.ToUpper().Trim());
+                if (existingVehicle != null)
+                {
+                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number already exists.");
+                    return View(viewModel);
+                }
+
                 var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == viewModel.OwnerPersonalNumber);
                 if (member != null)
                 {
@@ -140,6 +184,7 @@ namespace Garage3._0.Controllers
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            ViewBag.VehicleTypes = await _context.VehicleTypes.ToListAsync();
             if (id == null)
             {
                 return NotFound();
@@ -158,7 +203,7 @@ namespace Garage3._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Color,ModelType,Brand")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Color,ModelType,Brand,VehicleTypeId")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {

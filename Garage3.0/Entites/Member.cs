@@ -6,7 +6,7 @@ namespace Garage3._0.Entites
     {
         [Key]
         [Required(ErrorMessage = "Social number is required")]
-        [Display(Name = "Social Security No.")]
+        [Display(Name = "Person Number")]
         [StringLength(12, ErrorMessage = "Social number has to be 12 digits.")]
         [RegularExpression("\\d{12}$", ErrorMessage = "Social number " +
             "must be in the format 'YYYYMMDD1234'.")]

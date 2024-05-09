@@ -6,6 +6,7 @@ namespace Garage3._0.Entites
     public class Vehicle
     {
         [Key]
+        [Display(Name = "Registration Number")]
         public string Id { get; set; }//RegisterNumber
         public string Color { get; set; }
 
@@ -20,6 +21,6 @@ namespace Garage3._0.Entites
         // Navigation property
         public ICollection<Ownership>? Ownerships { get; set; }
 
-        public VehicleType VehicleType { get; set; }
+        public VehicleType? VehicleType { get; set; }
     }
 }

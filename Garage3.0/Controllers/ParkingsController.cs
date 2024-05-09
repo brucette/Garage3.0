@@ -38,6 +38,108 @@ namespace Garage3._0.Controllers
             return View(await vehicleData.ToListAsync());
         }
 
+        public async Task<IActionResult> SearchByRegNumber(string regNumber)
+        {
+            var query = _context.Parkings
+                    .Include(p => p.Ownership)
+                        .ThenInclude(m => m.Member)
+                    .Include(p => p.Ownership)
+                        .ThenInclude(v => v.Vehicle)
+                        .ThenInclude(v => v.VehicleType)
+                    .AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true);
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+            return View("Index", model);
+        }
+
+        public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber, string vehicleType)
+        {
+            var query = _context.Parkings
+                    .Include(p => p.Ownership)
+                        .ThenInclude(m => m.Member)
+                    .Include(p => p.Ownership)
+                        .ThenInclude(v => v.Vehicle)
+                        .ThenInclude(v => v.VehicleType)
+                    .AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true); 
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            if (!string.IsNullOrWhiteSpace(vehicleType))
+            {
+                query = query.Where(p => p.Ownership.Vehicle != null &&
+                              p.Ownership.Vehicle.VehicleType != null &&
+                              p.Ownership.Vehicle.VehicleType.Type == vehicleType);
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if(model.Any() && !string.IsNullOrWhiteSpace(regNumber)) 
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+            var viewModelList = model.Select(p => new GarageViewModel
+            {
+                OwnerName = p.Ownership.Member.FullName,
+                PersonalNumber = p.Ownership.Member.Id,
+                Membership = p.Ownership.Member.Membership,
+                ParkingLot = p.ParkingLotNumber,
+                ArrivalTime = p.ArrivalTime,
+                RegistrationNumber = p.Ownership.Vehicle.Id,
+                Color = p.Ownership.Vehicle.Color,
+                ModelType = p.Ownership.Vehicle.ModelType,
+                Brand = p.Ownership.Vehicle.Brand,
+                Type = p.Ownership.Vehicle.VehicleType.Type,
+                NumWheels = p.Ownership.Vehicle.VehicleType.NumWheels
+
+            }).ToList();
+
+            // Repopulate ViewBag.VehicleTypes for dropdown in case it's needed in the view
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                                        .Select(vt => vt.Type)
+                                        .Distinct()
+                                        .ToListAsync();
+
+            return View("ParkedVehicles", viewModelList);
+        }
+
+
         public async Task<IActionResult> ParkedVehicles()
         {
             var parkedData = await _context.Parkings
@@ -52,6 +154,12 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.VehicleTypes = await _context.VehicleTypes
+                            .Select(vt => vt.Type)
+                            .Distinct()
+                            .ToListAsync();
+
 
             var viewModelList = new List<GarageViewModel>(); // List to hold view models
 
@@ -77,7 +185,9 @@ namespace Garage3._0.Controllers
                 viewModelList.Add(viewModel);
             }
 
-            return View(viewModelList);
+
+            return View("ParkedVehicles", viewModelList);
+
         }
 
         // GET: Parkings/Details/5
@@ -229,6 +339,7 @@ namespace Garage3._0.Controllers
                    .ThenInclude(m => m.Member)
                .Include(p => p.Ownership)
                    .ThenInclude(v => v.Vehicle)
+                   .ThenInclude(vt => vt.VehicleType)
                .FirstOrDefaultAsync();
 
             if (parking != null)
@@ -245,7 +356,7 @@ namespace Garage3._0.Controllers
                 {
                     PersonNumber = parking.Ownership.MemberId,
                     RegistrationNumber = parking.VehicleId,
-                    VehicleType = parking.Ownership.Vehicle.VehicleTypeId,
+                    VehicleType = parking.Vehicle.VehicleType.Type,
                     Color = parking.Ownership.Vehicle.Color,
                     Model = parking.Ownership.Vehicle.ModelType,
                     Brand = parking.Ownership.Vehicle.Brand,

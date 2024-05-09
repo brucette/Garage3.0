@@ -56,6 +56,14 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("VehicleTypeId,Type,NumWheels")] VehicleType vehicleType)
         {
+            // Check if the vehicle type is already exists 
+            var existingVehicleType = await _context.VehicleTypes.FirstOrDefaultAsync(v => v.Type == vehicleType.Type);
+            if (existingVehicleType != null)
+            {
+                ModelState.AddModelError(nameof(vehicleType.Type), "This vehicle type already exists.");
+                return View(vehicleType);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(vehicleType);

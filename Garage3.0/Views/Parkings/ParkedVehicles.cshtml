@@ -3,11 +3,45 @@
 <h1>Garage overview</h1>
 <br>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-action="SearchParkedVehiclesByRegNumber" asp-controller="Parkings" method="get">
+    <div class="input-group">
+        <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
+        <select id="vehicleType" name="vehicleType" class="form-control">
+            <option value="">-- All --</option>
+            @foreach (var type in ViewBag.VehicleTypes)
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+@if (TempData["NoVehicleFound"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["NoVehicleFound"]
+    </div>
+}
+
+@if (TempData["VehicleFound"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["VehicleFound"]
+    </div>
+}
+
 <table class="table">
     <thead>
         <tr>
             <th>Owner</th>
-            <th>Social Security Nr.</th>
+            <th>Personal Number</th>
             <th>Membership</th>
             <th>Parking Lot</th>
             <th>Reg Nr</th>
@@ -31,7 +65,14 @@
                     @Html.DisplayFor(modelItem => item.PersonalNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Membership)
+                    @if (item.Membership)
+                    {
+                        <span style="color:green;">&#10004;</span>
+                    }
+                    else
+                    {
+                        <span style="color:red;">&#10008;</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ParkingLot)

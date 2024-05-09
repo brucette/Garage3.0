@@ -8,6 +8,7 @@ namespace Garage3._0.Entites
         public string MemberId { get; set; }
         public string VehicleId { get; set; }
 
+        [Display(Name = "Person Number")]
         public Member Member { get; set; }
         public Vehicle Vehicle { get; set; }
 
