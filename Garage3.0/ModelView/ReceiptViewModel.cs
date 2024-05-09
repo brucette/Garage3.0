@@ -5,7 +5,7 @@
         public int Id { get; private set; }
         public string PersonNumber { get; set; }
         public string RegistrationNumber { get; set; }
-        public int VehicleType { get; set; }
+        public string VehicleType { get; set; }
         public string Color { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }

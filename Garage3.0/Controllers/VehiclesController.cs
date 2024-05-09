@@ -48,7 +48,10 @@ namespace Garage3._0.Controllers
         //can make this to a serach service later?
         public async Task<IActionResult> SearchRegNumber(string regNumber)
         {
-            var query = _context.Vehicle.AsQueryable(); // Start with a base query
+            var query = _context.Vehicle
+                .Include(p => p.Ownerships)
+                    .ThenInclude(m => m.Member)
+                .AsQueryable(); // Start with a base query
 
             if (string.IsNullOrWhiteSpace(regNumber))
             {
@@ -73,10 +76,8 @@ namespace Garage3._0.Controllers
                 //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
             }
 
-
             return View("Index", model);
         }
-
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(string id)
@@ -116,7 +117,7 @@ namespace Garage3._0.Controllers
                 var existingVehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == viewModel.RegisterNumber.ToUpper().Trim());
                 if (existingVehicle != null)
                 {
-                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number is already in use.");
+                    ModelState.AddModelError(nameof(viewModel.RegisterNumber), "This register number already exists.");
                     return View(viewModel);
                 }
 
@@ -183,6 +184,7 @@ namespace Garage3._0.Controllers
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            ViewBag.VehicleTypes = await _context.VehicleTypes.ToListAsync();
             if (id == null)
             {
                 return NotFound();
@@ -201,7 +203,7 @@ namespace Garage3._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Color,ModelType,Brand")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Color,ModelType,Brand,VehicleTypeId")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
