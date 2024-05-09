@@ -4,7 +4,7 @@ namespace Garage3._0.ModelView
 {
     public class MemberIndexViewModel
     {
-        [Display(Name = "Social Security No.")]
+        [Display(Name = "Person Number")]
         public string Id { get; set; }
 
         [Display(Name = "First Name")]

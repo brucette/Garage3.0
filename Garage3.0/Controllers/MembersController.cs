@@ -30,13 +30,14 @@ namespace Garage3._0.Controllers
                 Id = m.Id,
                 FirstName = m.FirstName,
                 LastName = m.LastName,
-                Membership = m.Membership,  
+                Membership = m.Membership,
                 NumberOfVehicles = m.Ownerships.Count
-            });
+            }).OrderBy(m => m.FirstName.Substring(0, 2));
 
             //order the member list according to firstname and its 2 letters at beginning
-            var members = await _context.Members.OrderBy(m => m.FirstName.Substring(0,2)).ToListAsync();
-            return View(members);
+            //var members = await _context.Members.OrderBy(m => m.FirstName.Substring(0,2)).ToListAsync();
+
+            return View(await members.ToListAsync());
         }
 
         // GET: Members/Details/5
