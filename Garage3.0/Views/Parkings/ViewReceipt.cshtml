@@ -2,72 +2,76 @@
 
 <h1>Receipt</h1>
 
-<div>
-    <h4>Receipt Details</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Person Number
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PersonNumber
-        </dd>
-        <dt class="col-sm-2">
-            Registration Number
-        </dt>
-        <dd class="col-sm-10">
-            @Model.RegistrationNumber
-        </dd>
-        <dt class="col-sm-2">
-            Vehicle Type
-        </dt>
-        <dd class="col-sm-10">
-            @Model.VehicleType
-        </dd>
-        <dt class="col-sm-2">
-            Color
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Color
-        </dd>
-        <dt class="col-sm-2">
-            Model
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Model
-        </dd>
-        <dt class="col-sm-2">
-            Brand
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Brand
-        </dd>
-        <dt class="col-sm-2">
-            Check In Time
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CheckInTime
-        </dd>
-        <dt class="col-sm-2">
-            Check Out Time
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CheckOutTime
-        </dd>
-        <dt class="col-sm-2">
-            Total Parking Time (Minutes)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.TotalParkingTimeInMinutes
-        </dd>
-        <dt class="col-sm-2">
-            Price
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Price.ToString("F2") kr
-        </dd>
-    </dl>
-    <button onclick="window.print()">Print Receipt</button>
+<div class="BoxAroundLayout">
+
+    <div>
+        <h4>Receipt Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Person Number
+            </dt>
+            <dd class="col-sm-10">
+                @Model.PersonNumber
+            </dd>
+            <dt class="col-sm-2">
+                Registration Number
+            </dt>
+            <dd class="col-sm-10">
+                @Model.RegistrationNumber
+            </dd>
+            <dt class="col-sm-2">
+                Vehicle Type
+            </dt>
+            <dd class="col-sm-10">
+                @Model.VehicleType
+            </dd>
+            <dt class="col-sm-2">
+                Color
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Color
+            </dd>
+            <dt class="col-sm-2">
+                Model
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Model
+            </dd>
+            <dt class="col-sm-2">
+                Brand
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Brand
+            </dd>
+            <dt class="col-sm-2">
+                Check In Time
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CheckInTime
+            </dd>
+            <dt class="col-sm-2">
+                Check Out Time
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CheckOutTime
+            </dd>
+            <dt class="col-sm-2">
+                Total Parking Time (Minutes)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.TotalParkingTimeInMinutes
+            </dd>
+            <dt class="col-sm-2">
+                Price
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Price.ToString("F2") kr
+            </dd>
+        </dl>
+        <button onclick="window.print()">Print Receipt</button>
+    </div>
+
 </div>
 
 

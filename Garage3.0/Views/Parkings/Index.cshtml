@@ -6,65 +6,69 @@
 
 <h1>Index</h1>
 
-<form asp-action="SearchByRegNumber" asp-controller="Parkings" method="get">
-    <div class="input-group">
-        <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Search</button>
+<div class="BoxAroundLayout">
+
+    <form asp-action="SearchByRegNumber" asp-controller="Parkings" method="get">
+        <div class="input-group">
+            <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 
-@if (TempData["NoVehicleFound"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData["NoVehicleFound"]
-    </div>
-}
+    @if (TempData["NoVehicleFound"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["NoVehicleFound"]
+        </div>
+    }
 
-@if (TempData["VehicleFound"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["VehicleFound"]
-    </div>
-}
+    @if (TempData["VehicleFound"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["VehicleFound"]
+        </div>
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ParkingLotNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArrivalTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkingLotNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkingLotNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArrivalTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkingLotNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+
+</div>

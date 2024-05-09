@@ -6,106 +6,108 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form asp-action="SearchParkedVehiclesByRegNumber" asp-controller="Parkings" method="get">
-    <div class="input-group">
-        <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
-        <select id="vehicleType" name="vehicleType" class="form-control">
-            <option value="">-- All --</option>
-            @foreach (var type in ViewBag.VehicleTypes)
-            {
-                <option value="@type">@type</option>
-            }
-        </select>
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Search</button>
+<div class="BoxAroundLayout">
+
+    <form asp-action="SearchParkedVehiclesByRegNumber" asp-controller="Parkings" method="get">
+        <div class="input-group">
+            <input type="text" id="regNumber" name="regNumber" class="form-control" placeholder="Search for registration number" />
+            <select id="vehicleType" name="vehicleType" class="form-control">
+                <option value="">-- All --</option>
+                @foreach (var type in ViewBag.VehicleTypes)
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 
-@if (TempData["NoVehicleFound"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData["NoVehicleFound"]
-    </div>
-}
+    @if (TempData["NoVehicleFound"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["NoVehicleFound"]
+        </div>
+    }
 
-@if (TempData["VehicleFound"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["VehicleFound"]
-    </div>
-}
+    @if (TempData["VehicleFound"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["VehicleFound"]
+        </div>
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Personal Number</th>
-            <th>Membership</th>
-            <th>ParkingLot</th>
-            <th>Registration Number</th>
-            <th>Color</th>
-            <th>Model</th>
-            <th>Brand</th>
-            <th>Number Of Wheels</th>
-            <th>Type</th>
-            <th>ArrivalTime</th>
-            <th>Time Parked </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OwnerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PersonalNumber)
-                </td>
-                <td>
-                    @if (item.Membership)
-                    {
-                        <span style="color:green;">&#10004;</span>
-                    }
-                    else
-                    {
-                        <span style="color:red;">&#10008;</span>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ParkingLot)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumWheels)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArrivalTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisplayTime)
-                </td>
-                
+                <th>Name</th>
+                <th>Personal Number</th>
+                <th>Membership</th>
+                <th>ParkingLot</th>
+                <th>Registration Number</th>
+                <th>Color</th>
+                <th>Model</th>
+                <th>Brand</th>
+                <th>Number Of Wheels</th>
+                <th>Type</th>
+                <th>ArrivalTime</th>
+                <th>Time Parked </th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OwnerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonalNumber)
+                    </td>
+                    <td>
+                        @if (item.Membership)
+                        {
+                            <span style="color:green;">&#10004;</span>
+                        }
+                        else
+                        {
+                            <span style="color:red;">&#10008;</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkingLot)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumWheels)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ArrivalTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisplayTime)
+                    </td>
+                
+                </tr>
+            }
+        </tbody>
 
-</table>
+    </table>
 
-
+</div>
 

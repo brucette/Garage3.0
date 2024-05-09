@@ -8,61 +8,63 @@
 
 <h1>Create</h1>
 
-<h4>Parking</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ParkingLotNumber" class="control-label"></label>
-                <input asp-for="ParkingLotNumber" class="form-control" />
-                <span asp-validation-for="ParkingLotNumber" class="text-danger"></span>
-            </div>
-            <!--made so we can't see the arrivaltime on the site, but part of code is needed so that we don't get 0001-00-00 00:00:00 datetime in database,
-                if we want to send the current arrivaltime to the database when created btn is clicked-->
-            <div class="form-group" style="display:none">
-                <label asp-for="ArrivalTime" class="control-label"></label>
-                <input asp-for="ArrivalTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
-                <span asp-validation-for="ArrivalTime" class="text-danger"></span>
-            </div>
-            @* <div class="form-group">
-                <label asp-for="VehicleId" class="control-label"></label>
-                <input asp-for="VehicleId" class="form-control" />
+<div class="BoxAroundLayout">
+    <h4>Parking</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ParkingLotNumber" class="control-label"></label>
+                    <input asp-for="ParkingLotNumber" class="form-control" />
+                    <span asp-validation-for="ParkingLotNumber" class="text-danger"></span>
+                </div>
+                <!--made so we can't see the arrivaltime on the site, but part of code is needed so that we don't get 0001-00-00 00:00:00 datetime in database,
+                    if we want to send the current arrivaltime to the database when created btn is clicked-->
+                <div class="form-group" style="display:none">
+                    <label asp-for="ArrivalTime" class="control-label"></label>
+                    <input asp-for="ArrivalTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
+                    <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+                </div>
+                @* <div class="form-group">
+                    <label asp-for="VehicleId" class="control-label"></label>
+                    <input asp-for="VehicleId" class="form-control" />
+                    <span asp-validation-for="VehicleId" class="text-danger"></span>
+                </div> *@
+                @* Select VehicleId *@
+                <div class="form-group">
+                    <label asp-for="VehicleId" class="control-label"></label>
+                    <select class="form-control" name="VehicleId" asp-items="await service.GetVehicleIdsAsync()">
+                <option value="">Select vehicle</option>
+                </select>
                 <span asp-validation-for="VehicleId" class="text-danger"></span>
-            </div> *@
-            @* Select VehicleId *@
-            <div class="form-group">
-                <label asp-for="VehicleId" class="control-label"></label>
-                <select class="form-control" name="VehicleId" asp-items="await service.GetVehicleIdsAsync()">
-            <option value="">Select vehicle</option>
-            </select>
-            <span asp-validation-for="VehicleId" class="text-danger"></span>
-            </div> 
-            @* Select ownership *@
-            @* <div class="form-group">
-                <label asp-for="Ownership" class="control-label"></label>
-                <select class="form-control" name="Ownership" asp-items="await service.GetOwnershipsAsync()">
-                    <option value="">Select member and vehicle</option>
-                </select>
-                <span asp-validation-for="Ownership" class="text-danger"></span>
-            </div> *@
-            @* OR Select Vehicle? *@
-            @* <div class="form-group">
-                <label asp-for="VehicleTypeId" class="control-label"></label>
-                <select class="form-control" name="VehicleTypeId" asp-items="await service.GetVehicleTypesAsync()">
-                    <option value="">Select vehicle type</option>
-                </select>
-                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                </div> 
+                @* Select ownership *@
+                @* <div class="form-group">
+                    <label asp-for="Ownership" class="control-label"></label>
+                    <select class="form-control" name="Ownership" asp-items="await service.GetOwnershipsAsync()">
+                        <option value="">Select member and vehicle</option>
+                    </select>
+                    <span asp-validation-for="Ownership" class="text-danger"></span>
+                </div> *@
+                @* OR Select Vehicle? *@
+                @* <div class="form-group">
+                    <label asp-for="VehicleTypeId" class="control-label"></label>
+                    <select class="form-control" name="VehicleTypeId" asp-items="await service.GetVehicleTypesAsync()">
+                        <option value="">Select vehicle type</option>
+                    </select>
+                    <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+                </div> *@
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 

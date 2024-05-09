@@ -6,105 +6,109 @@
 
 <h1>Vehicles Database</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="BoxAroundLayout">
 
-@* make this a partial view later? *@
-<form asp-action="SearchRegNumber" asp-controller="Vehicles" method="get">
-    <div class="input-group">
-        <input type="text" id="regNumberSearch" name="regNumber" class="form-control" placeholder="Search for registration number" />
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </div>
-    @if (TempData["NoVehicleFound"] != null)
-    {
-        <div class="alert alert-danger" role="alert">
-            @TempData["NoVehicleFound"]
-        </div>
-    }
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
 
-    @if (TempData["VehicleFound"] != null)
-    {
-        <div class="alert alert-success" role="alert">
-            @TempData["VehicleFound"]
+    @* make this a partial view later? *@
+    <form asp-action="SearchRegNumber" asp-controller="Vehicles" method="get">
+        <div class="input-group">
+            <input type="text" id="regNumberSearch" name="regNumber" class="form-control" placeholder="Search for registration number" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </div>
-    }
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ownerships.FirstOrDefault().Member)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModelType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleType.VehicleTypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleType.NumWheels)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleType.Type)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    @*check here if there will be error when merging later*@
-    <tbody>
-        
-        @foreach (var item in Model)
+        @if (TempData["NoVehicleFound"] != null)
         {
-            @foreach (var ownership in item.Ownerships)
+            <div class="alert alert-danger" role="alert">
+                @TempData["NoVehicleFound"]
+            </div>
+        }
+
+        @if (TempData["VehicleFound"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["VehicleFound"]
+            </div>
+        }
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ownerships.FirstOrDefault().Member)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleType.VehicleTypeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleType.NumWheels)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleType.Type)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @*check here if there will be error when merging later*@
+        <tbody>
+        
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @if (item.Ownerships != null && item.Ownerships.Any())
-                        {
-                            @Html.DisplayFor(modelItem => ownership.Member.Id)
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => ownership.Vehicle.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Color)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModelType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Brand)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.VehicleTypeId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.NumWheels)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VehicleType.Type)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
+                @foreach (var ownership in item.Ownerships)
+                {
+                    <tr>
+                        <td>
+                            @if (item.Ownerships != null && item.Ownerships.Any())
+                            {
+                                @Html.DisplayFor(modelItem => ownership.Member.Id)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ownership.Vehicle.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModelType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Brand)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VehicleType.VehicleTypeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VehicleType.NumWheels)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VehicleType.Type)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
                 
-        }
-        }
-    </tbody>
-</table>
+            }
+            }
+        </tbody>
+    </table>
+
+</div>

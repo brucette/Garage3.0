@@ -31,3 +31,12 @@ body {
         display: none;
     }
 }
+
+
+.BoxAroundLayout {
+    background-color: #f0f0f0; /* Anpassa bakgrundsfärgen efter behov */
+    padding: 20px; /* Justera padding efter behov för att ge utrymme runt innehållet */
+    border-radius: 5px; /* Om du vill ha avrundade kanter på boxen */
+    border: 1px solid #ccc; /* Om du vill ha en ram runt boxen */
+    margin-bottom: 20px; /* Lägg till marginal nedanför boxen för att separera den från andra innehåll */
+}
