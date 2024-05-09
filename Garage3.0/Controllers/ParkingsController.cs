@@ -28,6 +28,42 @@ namespace Garage3._0.Controllers
             return View(await _context.Parkings.ToListAsync());
         }
 
+        public async Task<IActionResult> SearchByRegNumber(string regNumber)
+        {
+            var query = _context.Parkings
+                    .Include(p => p.Ownership)
+                        .ThenInclude(m => m.Member)
+                    .Include(p => p.Ownership)
+                        .ThenInclude(v => v.Vehicle)
+                        .ThenInclude(v => v.VehicleType)
+                    .AsQueryable(); // Start with a base query
+
+            if (string.IsNullOrWhiteSpace(regNumber))
+            {
+                // If regNumber field is empty, retrieve all vehicles
+                query = query.Where(p => true);
+            }
+            else
+            {
+                // Otherwise, filter by regNumber
+                query = query.Where(p => p.VehicleId == regNumber.ToUpper().Trim());
+            }
+
+            var model = await query.ToListAsync();
+
+            if (!model.Any())
+            {
+                TempData["NoVehicleFound"] = "No vehicles found with the specified registration number.";
+            }
+            else if (model.Any() && !string.IsNullOrWhiteSpace(regNumber))
+            {
+                TempData["VehicleFound"] = $"Vehicle with Licence Plate {model.First().VehicleId.ToUpper()} were found.";
+                //TempData["VehicleId"] = model.First().VehicleId; // Set the vehicle ID
+            }
+
+            return View("Index", model);
+        }
+
         public async Task<IActionResult> SearchParkedVehiclesByRegNumber(string regNumber, string vehicleType)
         {
             var query = _context.Parkings
@@ -35,6 +71,7 @@ namespace Garage3._0.Controllers
                         .ThenInclude(m => m.Member)
                     .Include(p => p.Ownership)
                         .ThenInclude(v => v.Vehicle)
+                        .ThenInclude(v => v.VehicleType)
                     .AsQueryable(); // Start with a base query
 
             if (string.IsNullOrWhiteSpace(regNumber))
@@ -50,7 +87,9 @@ namespace Garage3._0.Controllers
 
             if (!string.IsNullOrWhiteSpace(vehicleType))
             {
-                query = query.Where(p => p.Ownership.Vehicle.VehicleType.Type == vehicleType);
+                query = query.Where(p => p.Ownership.Vehicle != null &&
+                              p.Ownership.Vehicle.VehicleType != null &&
+                              p.Ownership.Vehicle.VehicleType.Type == vehicleType);
             }
 
             var model = await query.ToListAsync();
@@ -75,7 +114,10 @@ namespace Garage3._0.Controllers
                 RegistrationNumber = p.Ownership.Vehicle.Id,
                 Color = p.Ownership.Vehicle.Color,
                 ModelType = p.Ownership.Vehicle.ModelType,
-                Brand = p.Ownership.Vehicle.Brand
+                Brand = p.Ownership.Vehicle.Brand,
+                Type = p.Ownership.Vehicle.VehicleType.Type,
+                NumWheels = p.Ownership.Vehicle.VehicleType.NumWheels
+
             }).ToList();
 
             // Repopulate ViewBag.VehicleTypes for dropdown in case it's needed in the view

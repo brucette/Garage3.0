@@ -48,7 +48,10 @@ namespace Garage3._0.Controllers
         //can make this to a serach service later?
         public async Task<IActionResult> SearchRegNumber(string regNumber)
         {
-            var query = _context.Vehicle.AsQueryable(); // Start with a base query
+            var query = _context.Vehicle
+                .Include(p => p.Ownerships)
+                    .ThenInclude(m => m.Member)
+                .AsQueryable(); // Start with a base query
 
             if (string.IsNullOrWhiteSpace(regNumber))
             {
@@ -75,7 +78,6 @@ namespace Garage3._0.Controllers
 
             return View("Index", model);
         }
-
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(string id)

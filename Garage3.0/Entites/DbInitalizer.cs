@@ -59,7 +59,8 @@ namespace Garage3._0.Entites
                 _context.SaveChanges();
             }
 
-            if (!_context.Parkings.Any())
+            //This causes the garage site to have a error, find the error later if the time permits. For now park the vehicles manually
+            /*if (!_context.Parkings.Any())
             {
                 _context.AddRange
                 (
@@ -67,11 +68,11 @@ namespace Garage3._0.Entites
                     new Parking { ParkingLotNumber = 1, VehicleId = "abc456", ArrivalTime = DateTime.Now.AddDays(-1) },
                     new Parking { ParkingLotNumber = 2, VehicleId = "abc789", ArrivalTime = DateTime.Now.AddDays(-2) },
                     new Parking { ParkingLotNumber = 3, VehicleId = "qwe123", ArrivalTime = DateTime.Now.AddDays(-3) },
-                    new Parking { ParkingLotNumber = 0, VehicleId = "asd123", ArrivalTime = DateTime.Now.AddDays(-4) },
-                    new Parking { ParkingLotNumber = 0, VehicleId = "zxc123", ArrivalTime = DateTime.Now.AddMinutes(60) }
+                    new Parking { ParkingLotNumber = 4, VehicleId = "asd123", ArrivalTime = DateTime.Now.AddDays(-4) },
+                    new Parking { ParkingLotNumber = 5, VehicleId = "zxc123", ArrivalTime = DateTime.Now.AddMinutes(60) }
                 );
                 _context.SaveChanges();
-            }
+            }*/
         }
 
 
