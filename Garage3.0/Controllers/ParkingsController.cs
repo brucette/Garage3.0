@@ -307,7 +307,7 @@ namespace Garage3._0.Controllers
                 {
                     PersonNumber = parking.Ownership.MemberId,
                     RegistrationNumber = parking.VehicleId,
-                    VehicleType = parking.Ownership.Vehicle.VehicleTypeId,
+                    VehicleType = parking.Ownership.Vehicle.VehicleType.VehicleTypeId,
                     Color = parking.Ownership.Vehicle.Color,
                     Model = parking.Ownership.Vehicle.ModelType,
                     Brand = parking.Ownership.Vehicle.Brand,
