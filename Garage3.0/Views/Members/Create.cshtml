@@ -31,8 +31,10 @@
                 <label class="form-check-label" asp-for="Membership">Membership</label>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
+            <div class="mt-2 alert alert-@ViewBag.MessageType" role="alert">
+                @ViewBag.Message
+            </div>
         </form>
-
     </div>
 </div>
 
