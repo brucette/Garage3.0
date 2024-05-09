@@ -18,7 +18,13 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url('/Image/parking_garage.jpg');
+    background-size: cover;
+}
+
+footer {
+    background-color: aliceblue;
 }
 
 /* Hide navigation bars and print button when printing */
