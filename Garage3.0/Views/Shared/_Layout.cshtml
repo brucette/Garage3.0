@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Garage3._0</title>
+    <title>@ViewData["Title"] - Garage3.0</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Garage3.0.styles.css" asp-append-version="true" />
@@ -19,17 +19,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        </li> *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Member database</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Vehicles Database</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Member</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="VehicleTypes" asp-action="Index">Vehicles Types</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Vehicles</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="MembersOverview">Members Overview</a>
@@ -38,11 +38,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Parkings" asp-action="Index">Parking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Parkings" asp-action="ParkedVehicles">Garage</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Parkings" asp-action="ParkedVehicles">Garage Overview</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li> *@
                     </ul>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Garage3._0 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Garage3._0 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Patrik Högblom, Felix Edenborgh, Solange Mukamurenzi, Tina Bruce</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

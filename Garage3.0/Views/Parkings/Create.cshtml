@@ -3,12 +3,12 @@
 @inject IGetDataService service
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Park Vehicle";
 }
 
-<h1>Create</h1>
+<h1>Park Vehicle</h1>
 
-<h4>Parking</h4>
+@* <h4>Parking</h4> *@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -56,7 +56,7 @@
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Park" class="btn btn-primary" />
             </div>
         </form>
     </div>
