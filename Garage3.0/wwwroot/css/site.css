@@ -19,8 +19,8 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: url('/Image/parking_garage.jpg');
-    background-size: cover;
+    /*background-image: url('/Image/parking_garage.jpg');
+    background-size: cover;*/
 }
 
 footer {
